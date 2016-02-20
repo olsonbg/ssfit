@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+<link rel="stylesheet" href="file:///home/bgo/tips/markdown/github-markdown.css">
+<style>
+    .markdown-body {
+        min-width: 200px;
+        max-width: 790px;
+        margin: 0 auto;
+        padding: 30px;
+    }
+</style>
+<article class="markdown-body">
+<h1 id="ssfit">ssfit</h1>
+<p>A program to calculate the reducing parameters of the Simha-Somcynsky (SS) equation of state (EOS).</p>
+<p>SS equations in term of reduced variables <span class="math inline">\(\widetilde{P}\)</span>, <span class="math inline">\(\widetilde{V}\)</span>, <span class="math inline">\(\widetilde{T}\)</span>:</p>
+\begin{equation}
+\widetilde{P} = \frac{P}{P^*}
+\end{equation}
+\begin{equation}
+\widetilde{V} = \frac{V}{V^*} \\
+\end{equation}
+\begin{equation}
+\widetilde{T} = \frac{T}{T^*}
+\end{equation}
+<p>Equation (2) from Leszek Utracki, Robert Simha Macromol. Theory Simul. 2001, 10, 17-24:</p>
+<a name="sseos-01"></a>
+\begin{equation}
+  \frac{\widetilde{P}\widetilde{V}}{\widetilde{T}} - \frac{1}{1 - \eta} - \frac{2yQ^2}{\widetilde{T}}\left(AQ^2 - B\right) = 0 \qquad \mathrm{(Eq.~1)}
+\end{equation}
+<p>Equation (3) from Leszek Utracki, Robert Simha Macromol. Theory Simul. 2001, 10, 17-24:</p>
+<a name="sseos-02"></a>
+\begin{equation}
+ 3c\left[\frac{\eta - \frac{1}{3}}{1 - \eta} - \frac{yQ^2}{6\widetilde{T}}\left(3AQ^2 -2B\right)\right] + \left(2-s\right) - \frac{s}{y}\ln\left(1-y\right) = 0 \qquad \mathrm{(Eq.~2)}
+\end{equation}
+Where,
+\begin{equation}
+    Q = \frac{1}{y\widetilde{V}}
+\end{equation}
+\begin{equation}
+   \eta = 2^{-1/6}yQ^{1/3}
+\end{equation}\begin{equation} A = 1.011 \end{equation}\begin{equation} B = 1.2045 \end{equation}
+<h1 id="contents">Contents</h1>
+<ul>
+<li><a href="#libraries">Required Libraries</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#output">Output</a>
+<ul>
+<li>summary</li>
+<li>PVTVy</li>
+<li>TVV</li>
+<li>curves-PVy</li>
+</ul></li>
+</ul>
+<h1 id="required-libraries"><a name="libraries"></a>Required Libraries</h1>
+<h2 id="gnu-scientific-library-gsl"><a href="http://www.gnu.org/software/gsl/">GNU Scientific Library</a> (GSL)</h2>
+<p>Used for root finding.</p>
+<h2 id="minuit2"><a href="http://project-mathlibs.web.cern.ch/project-mathlibs/minuit/release/download.html">Minuit2</a></h2>
+<p>Used for minimizing chi squared.</p>
+<h1 id="installation">Installation</h1>
+<p>To compile the program</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mkdir</span> build
+<span class="kw">cd</span> build
+<span class="kw">cmake</span> -DCMAKE_BUILD_TYPE=release ..
+<span class="kw">make</span>
+<span class="kw">src/ssfit</span></code></pre></div>
+<p>To generate the documentation as html, which will be available at <code>docs/html/index.html</code>, use</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">make</span> docs</code></pre></div>
+<p>To cross-compile, use your toolchain cmake file as:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cmake</span> -DCMAKE_BUILD_TYPE=release -DCMAKE_TOOLCHAIN_FILE=<span class="kw">&lt;</span>Toolchain cmake file<span class="kw">&gt;</span> ..</code></pre></div>
+<h1 id="usage">Usage</h1>
+<p>A typical command line would look like this:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ssfit</span> -i data/PPE-PS/60.dat -r data/PPE-PS/60-ranges.dat -p 8425 -v 0.9065 -t 11434 --blockdata -s PPE-PS60 --curves</code></pre></div>
+<p>Below is a table of all options available from the command line. The long form options are preceded with <code>--</code>, and short form a single <code>-</code>. For options with both a long and short form, either one may be used on the command line.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Long form</th>
+<th align="center">Short form</th>
+<th align="left">Option Type</th>
+<th align="center">Required?</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><a href="#input">input</a> <a name="input-t"></a></td>
+<td align="center">i</td>
+<td align="left">string</td>
+<td align="center">yes</td>
+<td align="left">Input PVT data file</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="#pstar">pstar</a> <a name="pstar-t"></a></td>
+<td align="center">p</td>
+<td align="left">real number</td>
+<td align="center">yes</td>
+<td align="left">Initial Pstar value to use for fitting</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="#vstar">vstar</a> <a name="vstar-t"></a></td>
+<td align="center">v</td>
+<td align="left">real number</td>
+<td align="center">yes</td>
+<td align="left">Initial Vstar value to use for fitting</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="#tstar">tstar</a> <a name="tstar-t"></a></td>
+<td align="center">t</td>
+<td align="left">real number</td>
+<td align="center">yes</td>
+<td align="left">Initial Tstar value to use for fitting</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="#ranges">ranges</a> <a name="ranges-t"></a></td>
+<td align="center">r</td>
+<td align="left">string</td>
+<td align="center">no</td>
+<td align="left">Valid temperature ranges, for each pressure to use</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="#blockdata">blockdata</a> <a name="blockdata-t"></a></td>
+<td align="center">b</td>
+<td align="left"></td>
+<td align="center">no</td>
+<td align="left">Input PVT data is in block format</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="#fixp">fixp</a> <a name="fitp-t"></a></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="center">no</td>
+<td align="left">Fix Pstar to the value specified on the command line</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="#fixv">fixv</a> <a name="fitv-t"></a></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="center">no</td>
+<td align="left">Fix Vstar to the value specified on the command line</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="#fixt">fixt</a> <a name="fitt-t"></a></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="center">no</td>
+<td align="left">Fix Tstar to the value specified on the command line</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="#dataonly">dataonly</a> <a name="dataonly-y"></a></td>
+<td align="center">d</td>
+<td align="left"></td>
+<td align="center">no</td>
+<td align="left">Save the data in easy to plost files. This will not do and fitting</td>
+</tr>
+<tr class="odd">
+<td align="left">data</td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="center">no</td>
+<td align="left">Synonym for <a href="#dataonly-t">dataonly</a></td>
+</tr>
+<tr class="even">
+<td align="left"><a href="#scan">scan</a> <a name="scan-t"></a></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="center">no</td>
+<td align="left">Scan the fitting parameters around the minimum after an initial fitting, followed by a second round of fitting</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="#curves">curves</a> <a name="curves-t"></a></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="center">no</td>
+<td align="left">Generate curves for nice plotting (see <a href="#numpoints-t">numpoints</a> option)</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="#approximate">approximate</a> <a name="approx-t"></a></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="center">no</td>
+<td align="left">Use an approximate equation for fitting</td>
+</tr>
+<tr class="odd">
+<td align="left">approx</td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="center">no</td>
+<td align="left">Synonym for <a href="#approx-t">approximate</a></td>
+</tr>
+<tr class="even">
+<td align="left"><a href="#kelvin">kelvin</a> <a name="kelvin-t"></a></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="center">no</td>
+<td align="left">The input temperature are in Kelvin. The default is Celsius</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="#numpoints">numpoints</a> <a name="numpoints-t"></a></td>
+<td align="center">n</td>
+<td align="left">integer</td>
+<td align="center">no</td>
+<td align="left">Number of points to use for curve generation</td>
+</tr>
+</tbody>
+</table>
+<h1 id="output">Output</h1>
+<p>Depending upon the command line options, many data files may be generated. The description of all calculations are listed below</p>
+</article>
+</body>
+</html>

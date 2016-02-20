@@ -1,0 +1,3 @@
+// the configured options and settings
+#define ssfit_VERSION_MAJOR @ssfit_VERSION_MAJOR@
+#define ssfit_VERSION_MINOR @ssfit_VERSION_MINOR@
