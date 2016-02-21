@@ -55,6 +55,7 @@ int main(int argc, char *argv[]) {
 			{"numpoints",   required_argument, 0, 'n'},
 			{"blockdata"  , no_argument,       0, 'b'},
 			{"data"       , no_argument,       0, 'd'},
+			{"yonly"      , no_argument,       0, 'y'},
 			{"help",        no_argument,       0, 'h'},
 			{0, 0, 0, 0}
 		};
@@ -62,7 +63,7 @@ int main(int argc, char *argv[]) {
 		/* getopt_long stores the option index here. */
 		int option_index = 0;
 
-		c = getopt_long (argc, argv, "i:r:s:p:v:t:n:bdh",
+		c = getopt_long (argc, argv, "i:r:s:p:v:t:n:bdyh",
 		                 long_options, &option_index);
 
 		/* Detect the end of the options. */
@@ -107,6 +108,11 @@ int main(int argc, char *argv[]) {
 				break;
 			case 'd':
 				flags |= (unsigned int)Flags::DATAONLY;
+				break;
+			case 'y':
+				flags |= (unsigned int)Flags::YONLY;
+				flags |= (unsigned int)Flags::FIXED_P|Flags::FIXED_V|Flags::FIXED_T;
+				break;
 			case 'h':
 			case '?':
 				Help( argv[0] );
@@ -122,6 +128,11 @@ int main(int argc, char *argv[]) {
 		flags |= flag[i];
 	}
 
+	if ( (flags & Flags::YONLY) && (flags & Flags::CURVES) )
+	{
+		std::cout << "Can not use 'curves' and 'yonly' flags together.\n";
+		return EXIT_FAILURE;
+	}
 	if ( !(flags & Flags::DATAONLY) && !(pset&vset&tset) )
 	{
 		std::cout << "Must specify values for pstar, vstar, and tstar\n";

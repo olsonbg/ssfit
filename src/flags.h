@@ -23,7 +23,8 @@ enum class Flags : unsigned int {
 	CURVES        = 1 << 8, /**< Generate curves of P, V, T, and y         */
 	APPROXIMATE   = 1 << 9, /**< Generate curves of P, V, T, and y         */
 	KELVIN        = 1 <<10, /**< Data temperatures are in Kelvin           */
-	COUNT         = 12      /**< Number of flags in enum                   */
+	YONLY         = 1 <<11, /**< Fit y values only, all others fixed       */
+	COUNT         = 13      /**< Number of flags in enum                   */
 };
 
 unsigned int operator& (unsigned int l, Flags r);

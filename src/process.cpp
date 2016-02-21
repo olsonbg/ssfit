@@ -8,6 +8,7 @@
 #include "outlog.h"
 #include "flags.h"
 #include "ssfit.h"
+#include "yfit.h"
 #include "process.h"
 
 extern FitStatistics minimize;
@@ -78,6 +79,17 @@ bool process( const std::string ifile, const std::string ifileTempRanges,
 
 	minimize.Initialize( pts, volumes, var, 0 );
 
+	// Only fit y. Typically used for temperature below the glass transition,
+	// where the SS-EOS equilibrium condition does not hold.
+	if ( flags & Flags::YONLY )
+	{
+		yfit( ofilename.str(), Pstar, Vstar, Tstar );
+		save_PVTy( &saveprefix );
+
+		return true;
+	}
+
+
 	double fitresults[5];
 
 	// Do the fitting and save results.
@@ -87,8 +99,10 @@ bool process( const std::string ifile, const std::string ifileTempRanges,
 
 		save_PVTVy( &saveprefix );
 		save_TVV( &saveprefix );
+
 		if ( flags & Flags::CURVES )
 			curves( &saveprefix, fitresults, &ranges, yVr_initial, numpoints );
+
 	}
 
 	return true;

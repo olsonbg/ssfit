@@ -21,40 +21,46 @@ bool readPVT( const std::string filename,
 	       data_t;
 
 	std::ifstream ifp(filename.c_str(),std::ios::in);
-	std::string line;
-	while( std::getline(ifp, line) )
+
+	if ( ifp.is_open() )
 	{
-		if( line[0] != '#' )
+		std::string line;
+		while( std::getline(ifp, line) )
 		{
-			std::istringstream l(line);
-			l >> data_p;
-			l >> data_t;
-			l >> data_v;
-
-			// Temperatures must be in Kelvin
-			if ( !isKelvin )
-				data_t += 273.13;
-
-			if ( isValidTemperature(ranges, data_p, data_t) )
+			if( line[0] != '#' )
 			{
-				// use standard deviation of 0.0004 for volumes (volumes are
-				// measured to the fourth decimal point); Works well for
-				// measurements from Zoller's PVT machine.  Variance equals the
-				// standard deviation squared
-				std::vector< double >vals = {data_p,
-				                             data_v,
-				                             data_t,
-				                             0.0004*0.0004};
-				pvtd.push_back( vals );
+				std::istringstream l(line);
+				l >> data_p;
+				l >> data_t;
+				l >> data_v;
+
+				// Temperatures must be in Kelvin
+				if ( !isKelvin )
+					data_t += 273.13;
+
+				if ( isValidTemperature(ranges, data_p, data_t) )
+				{
+					// use standard deviation of 0.0004 for volumes (volumes are
+					// measured to the fourth decimal point); Works well for
+					// measurements from Zoller's PVT machine.  Variance equals the
+					// standard deviation squared
+					std::vector< double >vals = {data_p,
+				                                 data_v,
+				                                 data_t,
+				                                 0.0004*0.0004};
+					pvtd.push_back( vals );
+				}
 			}
 		}
+		ifp.close();
+
+		// Sort pvtd by P, sub-sorted by T.
+		sortdata( pvtd, pts, volumes, variances );
+
+		return true;
 	}
-	ifp.close();
 
-	// Sort pvtd by P, sub-sorted by T.
-	sortdata( pvtd, pts, volumes, variances );
-
-	return(true);
+	return false;
 }
 
 

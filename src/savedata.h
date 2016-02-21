@@ -39,4 +39,19 @@ bool save_TVV(const std::string *saveprefix);
  */
 bool save_PVTVy(const std::string *saveprefix);
 
+/**
+ * Save four column data file, with '-PVTy.dat' suffix. Used with \p YONLY
+ * flag.
+ *
+ *  - Columns
+ *   -# Measured pressure
+ *   -# Measured specific volume
+ *   -# Measured temperature
+ *   -# Fit occupied volume fraction
+ *
+ * \param[in] saveprefix  File name prefix to save data
+ *
+ * \return \p TRUE on success, \p FALSE otherwise
+ */
+bool save_PVTy(const std::string *saveprefix);
 #endif // _SAVEDATA_H
