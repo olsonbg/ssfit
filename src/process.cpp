@@ -48,7 +48,7 @@ bool process( const std::string ifile, const std::string ifileTempRanges,
 	}
 	else
 	{
-		if( !readPVT( ifile, &pts, &volumes, &var, flags & Flags::KELVIN ) )
+		if( !readPVT( ifile, &pts, &volumes, &var, &ranges,  flags & Flags::KELVIN ) )
 			return(false);
 	}
 

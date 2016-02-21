@@ -25,5 +25,6 @@ bool readPVT( const std::string filename,
               std::vector< std::vector< double > > *pts,
               std::vector< double > *volumes,
               std::vector< double > *variances,
+              const std::vector< std::vector< double > > *ranges,
               bool isKelvin);
 #endif // _READPVT_H
