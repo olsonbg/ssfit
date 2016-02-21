@@ -4,29 +4,53 @@ ssfit
 A program to calculate the reducing parameters of the Simha-Somcynsky (SS)
 equation of state (EOS).
 
-SS equations, in terms of reduced variables $\widetilde{P}$, $\widetilde{V}$,
-$\widetilde{T}$:
+# Contents
 
+  * [Description](#description)
+  * [Required Libraries](#libraries)
+  * [Installation](#installation)
+  * [Usage](#usage)
+  * [Output](#output)
+    * [summary](#save)
+    * [PVTVy](#save)
+    * [TVV](#save)
+    * [curves-PVy](#curves)
+
+
+**NOTE:** Github does not render LaTeX equations in markdown; to see the
+equations try viewing this file, or generating the
+[documentation](#documentation), on your own system.  You can also view the
+html rendered from this file at
+[docs/include/README.md.html](docs/include/README.md.html)
+
+# Description
+
+The Simha-Somcynsky equation of state, in terms of reduced variables
+$\widetilde{P}$, $\widetilde{V}$, $\widetilde{T}$:
+
+<a name="reducing"></a>
 \begin{equation}
 \widetilde{P} = \frac{P}{P^*}
 \end{equation}
 
 \begin{equation}
-\widetilde{V} = \frac{V}{V^*} \\
+\widetilde{V} = \frac{V}{V^*}
 \end{equation}
 
 \begin{equation}
 \widetilde{T} = \frac{T}{T^*}
 \end{equation}
 
-are given by equation (2) from Leszek Utracki, Robert Simha Macromol. Theory Simul. 2001, 10, 17-24:
+are given by equation (2) from Leszek Utracki, Robert Simha Macromol. Theory
+Simul. 2001, 10, 17-24:
 
 <a name="sseos-01"></a>
 \begin{equation}
   \frac{\widetilde{P}\widetilde{V}}{\widetilde{T}} - \frac{1}{1 - \eta} - \frac{2yQ^2}{\widetilde{T}}\left(AQ^2 - B\right) = 0 \qquad \mathrm{(Eq.~1)}
 \end{equation}
 
-and equation (3) from Leszek Utracki, Robert Simha Macromol. Theory Simul. 2001, 10, 17-24:
+and equation (3) from Leszek Utracki, Robert Simha Macromol. Theory Simul.
+2001, 10, 17-24:
 
 <a name="sseos-02"></a>
 \begin{equation}
@@ -46,11 +70,14 @@ Where,
 
 The program minimizes $\chi^2$, with the fit parameters $P^*$, $V^*$, and
 $T^*$:
+
+<a name="chi2"></a>
 \begin{equation}
-\chi^2 = \sum_{i=0}^{N}\frac{\left(M_i - F_i\right)^2}{\sigma_i}
+\chi^2 = \sum_{i=1}^{N}\frac{\left(M_i - F_i\right)^2}{\nu_i}
 \end{equation}
+
 where $M$ and $F$ are the measured and fit specific volumes, respectively,
-and $\sigma$ is the variance in the measured specific volumes (square of the
+and $\nu$ is the variance in the measured specific volumes (square of the
 standard deviation).
 
 The reduced specific volume ($\widetilde{V}$), and fraction of
@@ -65,16 +92,26 @@ using the following constraints:
   s\gg1
 \end{equation}
 
-# Contents
+Instead of the exact equation, approximate solutions to the SS-EOS may be
+determined by using equation (10) from Leszek Utracki, Robert Simha Macromol.
+Theory Simul. 2001, 10, 17-24:
 
-  * [Required Libraries](#libraries)
-  * [Installation](#installation)
-  * [Usage](#usage)
-  * [Output](#output)
-    * summary
-    * PVTVy
-    * TVV
-    * curves-PVy
+<a name="sseos-03"></a>
+\begin{equation}
+\ln \widetilde{V} = a_0 + a_1\widetilde{T}^{3/2} + \widetilde{P}\left[ a_2 + \left( a_3 + a_4\widetilde{P} + a_5\widetilde{P}^2\right)\widetilde{T}^2\right] \qquad \mathrm{(Eq.~3)}
+\end{equation}
+
+where the the reduced variables are as defined [previously](#reducing), and
+the constants are
+
+| Variable  | Value   |
+| --------- | -----:  |
+| $a_0$ |-0.10346 |
+| $a_1$ |  23.854 |
+| $a_2$ | -0.1320 |
+| $a_3$ |  -333.7 |
+| $a_4$ |  1032.5 |
+| $a_5$ | -1329.9 |
 
 
 # <a name="libraries"></a>Required Libraries
@@ -85,7 +122,7 @@ Used for root finding.
 
 ## [Minuit2](http://project-mathlibs.web.cern.ch/project-mathlibs/minuit/release/download.html)
 
-Used for minimizing chi squared.
+Used for minimizing $\chi^2$.
 
 
 # Installation
@@ -100,8 +137,8 @@ make
 src/ssfit
 ```
 
-To generate the documentation as html, which will be available at
-`docs/html/index.html`, use
+<a name="documentation"></a> To generate the documentation as html, which
+will be available at `docs/html/index.html`, use
 
 ```bash
 make docs
@@ -131,15 +168,16 @@ command line.
 |Long form                                                   | Short form |Option Type    | Required? | Description |
 |:-----------------------------------------------------------|:----------:|:--------------|:---------:|:------------|
 |[input](#input)                <a name="input-t"></a>       |   i        | string        | yes       | Input PVT data file|
-|[pstar](#pstar)                <a name="pstar-t"></a>       |   p        | real number   | yes       | Initial Pstar value to use for fitting|
-|[vstar](#vstar)                <a name="vstar-t"></a>       |   v        | real number   | yes       | Initial Vstar value to use for fitting|
-|[tstar](#tstar)                <a name="tstar-t"></a>       |   t        | real number   | yes       | Initial Tstar value to use for fitting|
+|[pstar](#Xstar)                <a name="pstar-t"></a>       |   p        | real number   | yes       | Initial $P^*$ value to use for fitting|
+|[vstar](#Xstar)                <a name="vstar-t"></a>       |   v        | real number   | yes       | Initial $V^*$ value to use for fitting|
+|[tstar](#Xstar)                <a name="tstar-t"></a>       |   t        | real number   | yes       | Initial $T^*$ value to use for fitting|
 |[ranges](#ranges)              <a name="ranges-t"></a>      |   r        | string        | no        | Valid temperature ranges, for each pressure to use |
 |[blockdata](#blockdata)        <a name="blockdata-t"></a>   |   b        |               | no        | Input PVT data is in block format |
-|[fixp](#fixp)                  <a name="fitp-t"></a>        |            |               | no        | Fix Pstar to the value specified on the command line|
-|[fixv](#fixv)                  <a name="fitv-t"></a>        |            |               | no        | Fix Vstar to the value specified on the command line|
-|[fixt](#fixt)                  <a name="fitt-t"></a>        |            |               | no        | Fix Tstar to the value specified on the command line|
-|[dataonly](#dataonly)          <a name="dataonly-y"></a>    |   d        |               | no        | Save the data in easy to plost files. This will not do and fitting |
+|[save](#save)                  <a name="save-t"></a>        |   s        | string        | no        | Prefix used for saving data |
+|[fixp](#fixX)                  <a name="fitp-t"></a>        |            |               | no        | Fix Pstar to the value specified on the command line|
+|[fixv](#fixX)                  <a name="fitv-t"></a>        |            |               | no        | Fix Vstar to the value specified on the command line|
+|[fixt](#fixX)                  <a name="fitt-t"></a>        |            |               | no        | Fix Tstar to the value specified on the command line|
+|[dataonly](#dataonly)          <a name="dataonly-y"></a>    |   d        |               | no        | Save the data in easy to plot files. This will not do and fitting |
 |data                                                        |            |               | no        | Synonym for [dataonly](#dataonly-t)|
 |[scan](#scan)                  <a name="scan-t"></a>        |            |               | no        | Scan the fitting parameters around the minimum after an initial fitting, followed by a second round of fitting|
 |[curves](#curves)              <a name="curves-t"></a>      |            |               | no        | Generate curves for nice plotting (see [numpoints](#numpoints-t) option)|
@@ -150,7 +188,114 @@ command line.
 
 
 
-# Output
+## Input
+
+Read PVT data that is in three column format, with columns separated by
+whitespace.
+
+  - Columns
+    1. Measured pressure
+    1. Measured temperature
+    1. Measured specific volume
+
+## Blockdata
+
+Read PVT data that is in block format, with columns separated by whitespace.
+
+ | Column 1 | Column 2 | Column 3 | .... | Column n |
+ |   ----   |   ---    |   ----   | ---- |   ----   |
+ |          |    P1    |    P2    |  ... |    Pn    |
+ |    T1    |    V11   |    V12   |  ... |    V1n   |
+ |    T2    |    V21   |    V22   |  ... |    V2n   |
+ |    ...   |    ...   |    ...   | ...  |    V2n   |
+ |    Tm    |    Vm1   |    Vm2   | ...  |    Vmn   |
+
+## Ranges
+Read temperature ranges
+
+Data is in three column format, with each column separated by whitespace.
+
+  - Columns
+    1. Pressure
+    1. Minimum temperature
+    1. Maximum temperature
+
+## Output
 
 Depending upon the command line options, many data files may be generated.
 The description of all calculations are listed below
+
+##  <a name="Xstar"></a> pstar, vstar, and tstar
+
+The initial guess for the reducing parameters of the [SS-EOS](#reducing). All
+three have the same units as the parameter they are reducing.
+
+## <a name="fixX"></a> fixp, fixv, and fixt
+
+The default behavior is to use $P^*$, $V^*$, and $T^*$ as fitting
+parameters, however one, two or all three parameters may be fixed with these
+options.
+
+## Dataonly
+
+Do not fit the data, only save it or generate [curves](#curves) from the
+$P^*$, $V^*$, and $T^*$ [parameters](#Xstar).
+
+## Scan
+
+After an initial minimization of [$\chi^2$](#chi2), the free parameters will
+be scanned around their current values in an attempt to refine the minimum.
+A second round of minimization will then be performed using the results of
+the scan as initial values for the free parameters.
+
+## Curves
+
+Generate curves, for specific volume ($V$) and occupied fraction
+of lattice sites ($y$), containing [numpoints](#numpoints) data points for
+all pressures and temperatures specified in the [ranges](#ranges) file.
+
+  - Columns of output file
+    1. Temperature
+    1. Specific volume from fit
+    1. Occupied fraction of lattice sites
+
+The results for each pressure are separated by a blank line.
+
+Default name of output file: `default-curves-PVy.dat`
+
+The `default` string will be replaced by the string given by [save](#save),
+if any.
+
+## Approximate
+
+The minimization is performed using the [approximate solution](#sseos-03) to
+the SS-EOS, instead of the exact equations [(1)](#sseos-01) and
+[(2)](#sseos-02).
+
+## Kelvin
+
+The temperature values in the [input](#input) and [ranges](#ranges) files are in
+Kelvin, instead of the default Celsius.
+
+## numpoints
+
+Number of data points to save for [curve](#curves) generation.
+
+## save
+
+Prefix used for saving data. If no save prefix is used, the string `default`
+will be used. The default files generated are listed below.
+
+  - `default-summary.dat`
+  - `default-PVTVy.dat`
+      - Columns
+          1. Measured pressure
+          1. Measured specific volume
+          1. Measured temperature
+          1. Fit specific volume
+          1. Fit occupied fraction
+  - `default-PVV.dat`
+      - Columns
+          1. Measured pressure
+          1. Measured specific volume
+          1. Fit specific volume

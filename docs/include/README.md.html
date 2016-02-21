@@ -58,22 +58,39 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <article class="markdown-body">
 <h1 id="ssfit">ssfit</h1>
 <p>A program to calculate the reducing parameters of the Simha-Somcynsky (SS) equation of state (EOS).</p>
-<p>SS equations in term of reduced variables <span class="math inline">\(\widetilde{P}\)</span>, <span class="math inline">\(\widetilde{V}\)</span>, <span class="math inline">\(\widetilde{T}\)</span>:</p>
+<h1 id="contents">Contents</h1>
+<ul>
+<li><a href="#description">Description</a></li>
+<li><a href="#libraries">Required Libraries</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#output">Output</a>
+<ul>
+<li><a href="#save">summary</a></li>
+<li><a href="#save">PVTVy</a></li>
+<li><a href="#save">TVV</a></li>
+<li><a href="#curves">curves-PVy</a></li>
+</ul></li>
+</ul>
+<p><strong>NOTE:</strong> Github does not render LaTeX equations in markdown; to see the equations try viewing this file, or generating the <a href="#documentation">documentation</a>, on your own system. You can also view the html rendered from this file at <a href="docs/include/README.md.html" class="uri">docs/include/README.md.html</a></p>
+<h1 id="description">Description</h1>
+<p>The Simha-Somcynsky equation of state, in terms of reduced variables <span class="math inline">\(\widetilde{P}\)</span>, <span class="math inline">\(\widetilde{V}\)</span>, <span class="math inline">\(\widetilde{T}\)</span>:</p>
+<a name="reducing"></a>
 \begin{equation}
 \widetilde{P} = \frac{P}{P^*}
 \end{equation}
 \begin{equation}
-\widetilde{V} = \frac{V}{V^*} \\
+\widetilde{V} = \frac{V}{V^*}
 \end{equation}
 \begin{equation}
 \widetilde{T} = \frac{T}{T^*}
 \end{equation}
-<p>Equation (2) from Leszek Utracki, Robert Simha Macromol. Theory Simul. 2001, 10, 17-24:</p>
+<p>are given by equation (2) from Leszek Utracki, Robert Simha Macromol. Theory Simul. 2001, 10, 17-24:</p>
 <a name="sseos-01"></a>
 \begin{equation}
   \frac{\widetilde{P}\widetilde{V}}{\widetilde{T}} - \frac{1}{1 - \eta} - \frac{2yQ^2}{\widetilde{T}}\left(AQ^2 - B\right) = 0 \qquad \mathrm{(Eq.~1)}
 \end{equation}
-<p>Equation (3) from Leszek Utracki, Robert Simha Macromol. Theory Simul. 2001, 10, 17-24:</p>
+<p>and equation (3) from Leszek Utracki, Robert Simha Macromol. Theory Simul. 2001, 10, 17-24:</p>
 <a name="sseos-02"></a>
 \begin{equation}
  3c\left[\frac{\eta - \frac{1}{3}}{1 - \eta} - \frac{yQ^2}{6\widetilde{T}}\left(3AQ^2 -2B\right)\right] + \left(2-s\right) - \frac{s}{y}\ln\left(1-y\right) = 0 \qquad \mathrm{(Eq.~2)}
@@ -85,24 +102,64 @@ Where,
 \begin{equation}
    \eta = 2^{-1/6}yQ^{1/3}
 \end{equation}\begin{equation} A = 1.011 \end{equation}\begin{equation} B = 1.2045 \end{equation}
-<h1 id="contents">Contents</h1>
-<ul>
-<li><a href="#libraries">Required Libraries</a></li>
-<li><a href="#installation">Installation</a></li>
-<li><a href="#usage">Usage</a></li>
-<li><a href="#output">Output</a>
-<ul>
-<li>summary</li>
-<li>PVTVy</li>
-<li>TVV</li>
-<li>curves-PVy</li>
-</ul></li>
-</ul>
+<p>The program minimizes <span class="math inline">\(\chi^2\)</span>, with the fit parameters <span class="math inline">\(P^*\)</span>, <span class="math inline">\(V^*\)</span>, and <span class="math inline">\(T^*\)</span>:</p>
+<a name="chi2"></a>
+\begin{equation}
+\chi^2 = \sum_{i=1}^{N}\frac{\left(M_i - F_i\right)^2}{\nu_i}
+\end{equation}
+<p>where <span class="math inline">\(M\)</span> and <span class="math inline">\(F\)</span> are the measured and fit specific volumes, respectively, and <span class="math inline">\(\nu\)</span> is the variance in the measured specific volumes (square of the standard deviation).</p>
+<p>The reduced specific volume (<span class="math inline">\(\widetilde{V}\)</span>), and fraction of occupied lattice sites (<span class="math inline">\(y\)</span>) are determined from equation <a href="#sseos-02">(2)</a>, using the following constraints:</p>
+\begin{equation}
+  \frac{s}{3c}\simeq1
+\end{equation}
+\begin{equation}
+  s\gg1
+\end{equation}
+<p>Instead of the exact equation, approximate solutions to the SS-EOS may be determined by using equation (10) from Leszek Utracki, Robert Simha Macromol. Theory Simul. 2001, 10, 17-24:</p>
+<a name="sseos-03"></a>
+\begin{equation}
+\ln \widetilde{V} = a_0 + a_1\widetilde{T}^{3/2} + \widetilde{P}\left[ a_2 + \left( a_3 + a_4\widetilde{P} + a_5\widetilde{P}^2\right)\widetilde{T}^2\right] \qquad \mathrm{(Eq.~3)}
+\end{equation}
+<p>where the the reduced variables are as defined <a href="#reducing">previously</a>, and the constants are</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Variable</th>
+<th align="right">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(a_0\)</span></td>
+<td align="right">-0.10346</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(a_1\)</span></td>
+<td align="right">23.854</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(a_2\)</span></td>
+<td align="right">-0.1320</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(a_3\)</span></td>
+<td align="right">-333.7</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(a_4\)</span></td>
+<td align="right">1032.5</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(a_5\)</span></td>
+<td align="right">-1329.9</td>
+</tr>
+</tbody>
+</table>
 <h1 id="required-libraries"><a name="libraries"></a>Required Libraries</h1>
 <h2 id="gnu-scientific-library-gsl"><a href="http://www.gnu.org/software/gsl/">GNU Scientific Library</a> (GSL)</h2>
 <p>Used for root finding.</p>
 <h2 id="minuit2"><a href="http://project-mathlibs.web.cern.ch/project-mathlibs/minuit/release/download.html">Minuit2</a></h2>
-<p>Used for minimizing chi squared.</p>
+<p>Used for minimizing <span class="math inline">\(\chi^2\)</span>.</p>
 <h1 id="installation">Installation</h1>
 <p>To compile the program</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mkdir</span> build
@@ -110,7 +167,7 @@ Where,
 <span class="kw">cmake</span> -DCMAKE_BUILD_TYPE=release ..
 <span class="kw">make</span>
 <span class="kw">src/ssfit</span></code></pre></div>
-<p>To generate the documentation as html, which will be available at <code>docs/html/index.html</code>, use</p>
+<p><a name="documentation"></a> To generate the documentation as html, which will be available at <code>docs/html/index.html</code>, use</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">make</span> docs</code></pre></div>
 <p>To cross-compile, use your toolchain cmake file as:</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cmake</span> -DCMAKE_BUILD_TYPE=release -DCMAKE_TOOLCHAIN_FILE=<span class="kw">&lt;</span>Toolchain cmake file<span class="kw">&gt;</span> ..</code></pre></div>
@@ -137,25 +194,25 @@ Where,
 <td align="left">Input PVT data file</td>
 </tr>
 <tr class="even">
-<td align="left"><a href="#pstar">pstar</a> <a name="pstar-t"></a></td>
+<td align="left"><a href="#Xstar">pstar</a> <a name="pstar-t"></a></td>
 <td align="center">p</td>
 <td align="left">real number</td>
 <td align="center">yes</td>
-<td align="left">Initial Pstar value to use for fitting</td>
+<td align="left">Initial <span class="math inline">\(P^*\)</span> value to use for fitting</td>
 </tr>
 <tr class="odd">
-<td align="left"><a href="#vstar">vstar</a> <a name="vstar-t"></a></td>
+<td align="left"><a href="#Xstar">vstar</a> <a name="vstar-t"></a></td>
 <td align="center">v</td>
 <td align="left">real number</td>
 <td align="center">yes</td>
-<td align="left">Initial Vstar value to use for fitting</td>
+<td align="left">Initial <span class="math inline">\(V^*\)</span> value to use for fitting</td>
 </tr>
 <tr class="even">
-<td align="left"><a href="#tstar">tstar</a> <a name="tstar-t"></a></td>
+<td align="left"><a href="#Xstar">tstar</a> <a name="tstar-t"></a></td>
 <td align="center">t</td>
 <td align="left">real number</td>
 <td align="center">yes</td>
-<td align="left">Initial Tstar value to use for fitting</td>
+<td align="left">Initial <span class="math inline">\(T^*\)</span> value to use for fitting</td>
 </tr>
 <tr class="odd">
 <td align="left"><a href="#ranges">ranges</a> <a name="ranges-t"></a></td>
@@ -172,76 +229,83 @@ Where,
 <td align="left">Input PVT data is in block format</td>
 </tr>
 <tr class="odd">
-<td align="left"><a href="#fixp">fixp</a> <a name="fitp-t"></a></td>
+<td align="left"><a href="#save">save</a> <a name="save-t"></a></td>
+<td align="center">s</td>
+<td align="left">string</td>
+<td align="center">no</td>
+<td align="left">Prefix used for saving data</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="#fixX">fixp</a> <a name="fitp-t"></a></td>
 <td align="center"></td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">Fix Pstar to the value specified on the command line</td>
 </tr>
-<tr class="even">
-<td align="left"><a href="#fixv">fixv</a> <a name="fitv-t"></a></td>
+<tr class="odd">
+<td align="left"><a href="#fixX">fixv</a> <a name="fitv-t"></a></td>
 <td align="center"></td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">Fix Vstar to the value specified on the command line</td>
 </tr>
-<tr class="odd">
-<td align="left"><a href="#fixt">fixt</a> <a name="fitt-t"></a></td>
+<tr class="even">
+<td align="left"><a href="#fixX">fixt</a> <a name="fitt-t"></a></td>
 <td align="center"></td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">Fix Tstar to the value specified on the command line</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><a href="#dataonly">dataonly</a> <a name="dataonly-y"></a></td>
 <td align="center">d</td>
 <td align="left"></td>
 <td align="center">no</td>
-<td align="left">Save the data in easy to plost files. This will not do and fitting</td>
+<td align="left">Save the data in easy to plot files. This will not do and fitting</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">data</td>
 <td align="center"></td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">Synonym for <a href="#dataonly-t">dataonly</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><a href="#scan">scan</a> <a name="scan-t"></a></td>
 <td align="center"></td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">Scan the fitting parameters around the minimum after an initial fitting, followed by a second round of fitting</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><a href="#curves">curves</a> <a name="curves-t"></a></td>
 <td align="center"></td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">Generate curves for nice plotting (see <a href="#numpoints-t">numpoints</a> option)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><a href="#approximate">approximate</a> <a name="approx-t"></a></td>
 <td align="center"></td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">Use an approximate equation for fitting</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">approx</td>
 <td align="center"></td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">Synonym for <a href="#approx-t">approximate</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><a href="#kelvin">kelvin</a> <a name="kelvin-t"></a></td>
 <td align="center"></td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">The input temperature are in Kelvin. The default is Celsius</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><a href="#numpoints">numpoints</a> <a name="numpoints-t"></a></td>
 <td align="center">n</td>
 <td align="left">integer</td>
@@ -250,8 +314,131 @@ Where,
 </tr>
 </tbody>
 </table>
-<h1 id="output">Output</h1>
+<h2 id="input">Input</h2>
+<p>Read PVT data that is in three column format, with columns separated by whitespace.</p>
+<ul>
+<li>Columns
+<ol style="list-style-type: decimal">
+<li>Measured pressure</li>
+<li>Measured temperature</li>
+<li>Measured specific volume</li>
+</ol></li>
+</ul>
+<h2 id="blockdata">Blockdata</h2>
+<p>Read PVT data that is in block format, with columns separated by whitespace.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Column 1</th>
+<th align="left">Column 2</th>
+<th align="left">Column 3</th>
+<th align="left">....</th>
+<th align="left">Column n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">P1</td>
+<td align="left">P2</td>
+<td align="left">...</td>
+<td align="left">Pn</td>
+</tr>
+<tr class="even">
+<td align="left">T1</td>
+<td align="left">V11</td>
+<td align="left">V12</td>
+<td align="left">...</td>
+<td align="left">V1n</td>
+</tr>
+<tr class="odd">
+<td align="left">T2</td>
+<td align="left">V21</td>
+<td align="left">V22</td>
+<td align="left">...</td>
+<td align="left">V2n</td>
+</tr>
+<tr class="even">
+<td align="left">...</td>
+<td align="left">...</td>
+<td align="left">...</td>
+<td align="left">...</td>
+<td align="left">V2n</td>
+</tr>
+<tr class="odd">
+<td align="left">Tm</td>
+<td align="left">Vm1</td>
+<td align="left">Vm2</td>
+<td align="left">...</td>
+<td align="left">Vmn</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ranges">Ranges</h2>
+<p>Read temperature ranges</p>
+<p>Data is in three column format, with each column separated by whitespace.</p>
+<ul>
+<li>Columns
+<ol style="list-style-type: decimal">
+<li>Pressure</li>
+<li>Minimum temperature</li>
+<li>Maximum temperature</li>
+</ol></li>
+</ul>
+<h2 id="output">Output</h2>
 <p>Depending upon the command line options, many data files may be generated. The description of all calculations are listed below</p>
+<h2 id="pstar-vstar-and-tstar"><a name="Xstar"></a> pstar, vstar, and tstar</h2>
+<p>The initial guess for the reducing parameters of the <a href="#reducing">SS-EOS</a>. All three have the same units as the parameter they are reducing.</p>
+<h2 id="fixp-fixv-and-fixt"><a name="fixX"></a> fixp, fixv, and fixt</h2>
+<p>The default behavior is to use <span class="math inline">\(P^*\)</span>, <span class="math inline">\(V^*\)</span>, and <span class="math inline">\(T^*\)</span> as fitting parameters, however one, two or all three parameters may be fixed with these options.</p>
+<h2 id="dataonly">Dataonly</h2>
+<p>Do not fit the data, only save it or generate <a href="#curves">curves</a> from the <span class="math inline">\(P^*\)</span>, <span class="math inline">\(V^*\)</span>, and <span class="math inline">\(T^*\)</span> <a href="#Xstar">parameters</a>.</p>
+<h2 id="scan">Scan</h2>
+<p>After an initial minimization of <a href="#chi2"><span class="math inline">\(\chi^2\)</span></a>, the free parameters will be scanned around their current values in an attempt to refine the minimum. A second round of minimization will then be performed using the results of the scan as initial values for the free parameters.</p>
+<h2 id="curves">Curves</h2>
+<p>Generate curves, for specific volume (<span class="math inline">\(V\)</span>) and occupied fraction of lattice sites (<span class="math inline">\(y\)</span>), containing <a href="#numpoints">numpoints</a> data points for all pressures and temperatures specified in the <a href="#ranges">ranges</a> file.</p>
+<ul>
+<li>Columns of output file
+<ol style="list-style-type: decimal">
+<li>Temperature</li>
+<li>Specific volume from fit</li>
+<li>Occupied fraction of lattice sites</li>
+</ol></li>
+</ul>
+<p>The results for each pressure are separated by a blank line.</p>
+<p>Default name of output file: <code>default-curves-PVy.dat</code></p>
+<p>The <code>default</code> string will be replaced by the string given by <a href="#save">save</a>, if any.</p>
+<h2 id="approximate">Approximate</h2>
+<p>The minimization is performed using the <a href="#sseos-03">approximate solution</a> to the SS-EOS, instead of the exact equations <a href="#sseos-01">(1)</a> and <a href="#sseos-02">(2)</a>.</p>
+<h2 id="kelvin">Kelvin</h2>
+<p>The temperature values in the <a href="#input">input</a> and <a href="#ranges">ranges</a> files are in Kelvin, instead of the default Celsius.</p>
+<h2 id="numpoints">numpoints</h2>
+<p>Number of data points to save for <a href="#curves">curve</a> generation.</p>
+<h2 id="save">save</h2>
+<p>Prefix used for saving data. If no save prefix is used, the string <code>default</code> will be used. The default files generated are listed below.</p>
+<ul>
+<li><code>default-summary.dat</code></li>
+<li><code>default-PVTVy.dat</code>
+<ul>
+<li>Columns
+<ol style="list-style-type: decimal">
+<li>Measured pressure</li>
+<li>Measured specific volume</li>
+<li>Measured temperature</li>
+<li>Fit specific volume</li>
+<li>Fit occupied fraction</li>
+</ol></li>
+</ul></li>
+<li><code>default-PVV.dat</code>
+<ul>
+<li>Columns
+<ol style="list-style-type: decimal">
+<li>Measured pressure</li>
+<li>Measured specific volume</li>
+<li>Fit specific volume</li>
+</ol></li>
+</ul></li>
+</ul>
 </article>
 </body>
 </html>
