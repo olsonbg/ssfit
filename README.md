@@ -1,7 +1,7 @@
 ssfit
 =====
 
-A program to calculate the reducing parameters of the Simha-Somcynsky (SS)
+A program to calculate the scaling parameters of the Simha-Somcynsky (SS)
 equation of state (EOS).
 
 # Contents
@@ -28,7 +28,7 @@ html rendered from this file at
 The Simha-Somcynsky equation of state, in terms of reduced variables
 $\widetilde{P}$, $\widetilde{V}$, $\widetilde{T}$:
 
-<a name="reducing"></a>
+<a name="scaling"></a>
 \begin{equation}
 \widetilde{P} = \frac{P}{P^*}
 \end{equation}
@@ -101,7 +101,7 @@ Theory Simul. 2001, 10, 17-24:
 \ln \widetilde{V} = a_0 + a_1\widetilde{T}^{3/2} + \widetilde{P}\left[ a_2 + \left( a_3 + a_4\widetilde{P} + a_5\widetilde{P}^2\right)\widetilde{T}^2\right] \qquad \mathrm{(Eq.~3)}
 \end{equation}
 
-where the the reduced variables are as defined [previously](#reducing), and
+where the the reduced variables are as defined [previously](#scaling), and
 the constants are
 
 | Variable  | Value   |
@@ -227,8 +227,8 @@ The description of all calculations are listed below
 
 ##  <a name="Xstar"></a> pstar, vstar, and tstar
 
-The initial guess for the reducing parameters of the [SS-EOS](#reducing). All
-three have the same units as the parameter they are reducing.
+The initial guess for the scaling parameters of the [SS-EOS](#scaling). All
+three have the same units as the parameter they are scaling.
 
 ## <a name="fixX"></a> fixp, fixv, and fixt
 
