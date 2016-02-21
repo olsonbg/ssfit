@@ -10,9 +10,10 @@ equation of state (EOS).
   * [Required Libraries](#libraries)
   * [Installation](#installation)
   * [Usage](#usage)
-  * [Output](#output)
+  * Output
     * [summary](#save)
     * [PVTVy](#save)
+    * [PVTy](#yonly)
     * [TVV](#save)
     * [curves-PVy](#curves)
 
@@ -41,16 +42,16 @@ $\widetilde{P}$, $\widetilde{V}$, $\widetilde{T}$:
 \widetilde{T} = \frac{T}{T^*}
 \end{equation}
 
-are given by equation (2) from Leszek Utracki, Robert Simha Macromol. Theory
-Simul. 2001, 10, 17-24:
+are given by equation (2) from Leszek Utracki, Robert Simha *Macromol. Theory
+Simul.* **2001**, 10, 17-24:
 
 <a name="sseos-01"></a>
 \begin{equation}
   \frac{\widetilde{P}\widetilde{V}}{\widetilde{T}} - \frac{1}{1 - \eta} - \frac{2yQ^2}{\widetilde{T}}\left(AQ^2 - B\right) = 0 \qquad \mathrm{(Eq.~1)}
 \end{equation}
 
-and equation (3) from Leszek Utracki, Robert Simha Macromol. Theory Simul.
-2001, 10, 17-24:
+and equation (3) from Leszek Utracki, Robert Simha *Macromol. Theory Simul.*
+**2001**, 10, 17-24:
 
 <a name="sseos-02"></a>
 \begin{equation}
@@ -93,8 +94,8 @@ using the following constraints:
 \end{equation}
 
 Instead of the exact equation, approximate solutions to the SS-EOS may be
-determined by using equation (10) from Leszek Utracki, Robert Simha Macromol.
-Theory Simul. 2001, 10, 17-24:
+determined by using equation (10) from Leszek Utracki, Robert *Simha Macromol.
+Theory Simul.* **2001**, 10, 17-24:
 
 <a name="sseos-03"></a>
 \begin{equation}
@@ -172,6 +173,7 @@ command line.
 |[vstar](#Xstar)                <a name="vstar-t"></a>       |   v        | real number   | yes       | Initial $V^*$ value to use for fitting|
 |[tstar](#Xstar)                <a name="tstar-t"></a>       |   t        | real number   | yes       | Initial $T^*$ value to use for fitting|
 |[ranges](#ranges)              <a name="ranges-t"></a>      |   r        | string        | no        | Valid temperature ranges, for each pressure to use |
+|[yonly](#yonly)                <a name="yonly-t"></a>       |   y        |               | no        | Fit only $y$ values, $P^*$, $V^*$, and $T^*$ are fixed.
 |[blockdata](#blockdata)        <a name="blockdata-t"></a>   |   b        |               | no        | Input PVT data is in block format |
 |[save](#save)                  <a name="save-t"></a>        |   s        | string        | no        | Prefix used for saving data |
 |[fixp](#fixX)                  <a name="fitp-t"></a>        |            |               | no        | Fix Pstar to the value specified on the command line|
@@ -203,7 +205,7 @@ whitespace.
 Read PVT data that is in block format, with columns separated by whitespace.
 
 | Column 1 | Column 2 | Column 3 | .... | Column n |
-|   ----   |   ---    |   ----   | ---- |   ----   |
+| :------: | :------: | :------: | :--: | :------: |
 |          |    P1    |    P2    |  ... |    Pn    |
 |    T1    |    V11   |    V12   |  ... |    V1n   |
 |    T2    |    V21   |    V22   |  ... |    V2n   |
@@ -220,10 +222,22 @@ Data is in three column format, with each column separated by whitespace.
     1. Minimum temperature
     1. Maximum temperature
 
-## Output
+## yonly
 
-Depending upon the command line options, many data files may be generated.
-The description of all calculations are listed below
+For temperatures below the glass transition, the SS-EOS equilibrium equation
+[(2)](#sseos-02) is not valid. This makes determining $P^*$, $V^*$, and
+$T^*$ difficult, however the $y$ values can be determined from equation
+[(1)](#sseos-01), if the scaling parameters are known. This option enables
+determining $y$ by fixing the scaling parameters, and using only equation
+[(1)](#sseos-01).
+
+Default name of output file: `default-PVTy.dat`
+
+  - Columns of output file
+    1. Measured pressure
+    1. Measured specific volume
+    1. Measured temperature
+    1. Fit occupied fraction of lattice sites
 
 ##  <a name="Xstar"></a> pstar, vstar, and tstar
 
@@ -255,7 +269,7 @@ of lattice sites ($y$), containing [numpoints](#numpoints) data points for
 all pressures and temperatures specified in the [ranges](#ranges) file.
 
   - Columns of output file
-    1. Temperature
+    1. Measured temperature
     1. Specific volume from fit
     1. Occupied fraction of lattice sites
 
