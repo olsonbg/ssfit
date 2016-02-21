@@ -202,13 +202,13 @@ whitespace.
 
 Read PVT data that is in block format, with columns separated by whitespace.
 
- | Column 1 | Column 2 | Column 3 | .... | Column n |
- |   ----   |   ---    |   ----   | ---- |   ----   |
- |          |    P1    |    P2    |  ... |    Pn    |
- |    T1    |    V11   |    V12   |  ... |    V1n   |
- |    T2    |    V21   |    V22   |  ... |    V2n   |
- |    ...   |    ...   |    ...   | ...  |    V2n   |
- |    Tm    |    Vm1   |    Vm2   | ...  |    Vmn   |
+| Column 1 | Column 2 | Column 3 | .... | Column n |
+|   ----   |   ---    |   ----   | ---- |   ----   |
+|          |    P1    |    P2    |  ... |    Pn    |
+|    T1    |    V11   |    V12   |  ... |    V1n   |
+|    T2    |    V21   |    V22   |  ... |    V2n   |
+|    ...   |    ...   |    ...   | ...  |    V2n   |
+|    Tm    |    Vm1   |    Vm2   | ...  |    Vmn   |
 
 ## Ranges
 Read temperature ranges
