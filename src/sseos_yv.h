@@ -46,6 +46,7 @@
 #ifndef _SSEOS_YV_H
 #define _SSEOS_YV_H
 
+#include "sseos_params.h"
 
 /**
  * Calculate the value of the left side of equation \ref SS2. If \p Constraints
@@ -61,17 +62,12 @@
  * Leszek Utracki, Robert Simha Macromol. Theory Simul. 2001, 10, 17-24
  * Equation (3).
  *
- * \param[in] y    Fraction of occupied lattice sites
- * \param[in] Vr   Reduced specific volume
- * \param[in] Tr   Reduced temperature
- * \param[in] c    Related to number of external degrees of freedom per chain
- * \param[in] s    number of segments per chain
+ * \param[in] p            SS-EOS parameters
  * \param[in] Constraints  Use constraints on c and s.
  *
- * \return Value of left side of equation xx
+ * \return Value of left side of equation \ref SS2
  */
-double sseos_yv_f0( const double y, const double Vr, const double Tr,
-                    const double c, const double s,
+double sseos_yv_f0( const struct sseos_params *p,
                     const int Constraints);
 
 /**
@@ -80,15 +76,46 @@ double sseos_yv_f0( const double y, const double Vr, const double Tr,
  * Leszek Utracki, Robert Simha Macromol. Theory Simul. 2001, 10, 17-24
  * Equation (2).
  *
- * \param[in] y    Fraction of occupied lattice sites
- * \param[in] Pr   Reduced pressure
- * \param[in] Vr   Reduced specific volume
- * \param[in] Tr   Reduced temperature
+ * \param[in] p    SS-EOS parameters
  *
- * \return Value of left side of equation xx
+ * \return Value of left side of equation \ref SS1
  */
-double sseos_yv_f1( const double y,
-                    const double Pr, const double Vr, const double Tr);
+double sseos_yv_f1( const struct sseos_params *p );
 
+/**
+ * Derivative of \ref SS2 with respect to y.
+ *
+ * \param[in] p    SS-EOS parameters
+ *
+ * \return Value derivative
+ */
+double sseos_yv_df0dy ( const struct sseos_params *p );
+
+/**
+ * Derivative of \ref SS2 with respect to reduced specific volume.
+ *
+ * \param[in] p    SS-EOS parameters
+ *
+ * \return Value derivative
+ */
+double sseos_yv_df0dVr( const struct sseos_params *p );
+
+/**
+ * Derivative of \ref SS1 with respect to y.
+ *
+ * \param[in] p    SS-EOS parameters
+ *
+ * \return Value derivative
+ */
+double sseos_yv_df1dy ( const struct sseos_params *p );
+
+/**
+ * Derivative of \ref SS1 with respect to reduced specific volume.
+ *
+ * \param[in] p    SS-EOS parameters
+ *
+ * \return Value derivative
+ */
+double sseos_yv_df1dVr( const struct sseos_params *p );
 
 #endif // _SSEOS_YV_H

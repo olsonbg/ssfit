@@ -2,7 +2,8 @@
 #include <Minuit2/MnPlot.h>
 #include <Math/Functor.h>
 #include <sstream>
-#include "sseos_v.h"
+#include "sseos_params.h"
+#include "sseos_yv_finder.h"
 #include "sseos_approx_v.h"
 #include "fitstatistics.h"
 #include "OutputFormat.h"
@@ -14,7 +15,8 @@ extern FitStatistics minimize;
 void SSFitData( const double *params, bool APPROXIMATE ) {
 	// Initial Guess for Vr and y.
 	double yVr_initial[2] = { 0.90, 0.65 };
-	double yVr[2];
+
+	struct sseos_params *p = new struct sseos_params;
 
 	const std::vector< std::vector< double > >& Inputs = minimize.GetInputValues();
 
@@ -22,19 +24,25 @@ void SSFitData( const double *params, bool APPROXIMATE ) {
 	double yFit[ Inputs.size() ];
 
 	for(unsigned int n = 0; n < Inputs.size(); n++) {
-		// Set yVr to initial guesses.
-		yVr[0] = yVr_initial[0];
-		yVr[1] = yVr_initial[1];
+		p->Pr = Inputs[n][0] / params[0];
+		p->Tr = Inputs[n][1] / params[2];
+		p->s  = params[4];
+		p->c  = p->s/3.0; // Constraint: s = 3c
+		// Reset initial guesses for y and Vr
+		p->y  = yVr_initial[0];
+		p->Vr = yVr_initial[1];
 
 		if ( APPROXIMATE )
-			sseos_approx_v( &yVr[0], Inputs[n][0], Inputs[n][1], params );
+			sseos_approx_v( p );
 		else
-			sseos_v( yVr, Inputs[n][0], Inputs[n][1], params );
+			sseos_yv_finder( p );
 
-		yFit[n] = yVr[0];
-		Fit[n] = params[1] * yVr[1];
+		yFit[n] = p->y;
+		Fit[n] = params[1] * p->Vr;
 
 	}
+
+	delete p;
 
 	minimize.SetFitValues( Fit, yFit );
 }

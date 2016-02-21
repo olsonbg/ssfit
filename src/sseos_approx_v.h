@@ -28,18 +28,12 @@
 /**
  * Approximate equation for SS equation of state
  *
- * Initial values for y and Vr are taken from yVr, and the best fit values are
+ * Initial values for y and Vr are taken from \p p, and the best fit values are
  * placed in the same variable.
  *
- * \param[in,out] yVr    y and Vr.
- * \param[in] P          Pressure
- * \param[in] T          Temperature
- * \param[in] params     Fitting parameters (Pstar, Vstar, Tstar, c, and s)
+ * \param[in,out] p      SS-EOS parameters
  *
- * \return \p yVr
  */
-double *sseos_approx_v( double *yVr,
-                        const double P, const double T,
-                        const double *params );
+void sseos_approx_v( struct sseos_params *p );
 
 #endif // __SSEOS_APPROX_V_H

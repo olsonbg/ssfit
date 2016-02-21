@@ -2,7 +2,8 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include "sseos_v.h"
+#include "sseos_params.h"
+#include "sseos_yv_finder.h"
 
 bool curves( const std::string *saveprefix,
              const double *params,
@@ -21,29 +22,40 @@ bool curves( const std::string *saveprefix,
 	{
 		out << "# Temperature / Fit Volumes / Fit y\n#\n";
 
-		// Vr and y.
-		double yVr[2];
-		for(unsigned int p = 0; p != ranges->size(); ++p)
-		{
-			out << "# " << ranges->at(p).at(0) << "\n";
+		struct sseos_params *p = new struct sseos_params;
 
-			const double dt = (ranges->at(p).at(2) - ranges->at(p).at(1) + 1.0)/double(N);
+		p->s  = params[4];
+		p->c  = p->s/3.0; // Constraint: s = 3c
+
+		for(unsigned int i = 0; i != ranges->size(); ++i)
+		{
+			out << "# " << ranges->at(i).at(0) << "\n";
+			p->Pr = ranges->at(i).at(0) / params[0];
+
+			// Set initial guesses for y and Vr for this pressure
+			p->y  = yVr_initial[0];
+			p->Vr = yVr_initial[1];
+
+			const double dt = (ranges->at(i).at(2) - ranges->at(i).at(1) + 1.0)/double(N);
 			double T;
 			for(unsigned int n = 0; n != N; ++n)
 			{
-				// Set yVr to initial guesses.
-				yVr[0] = yVr_initial[0];
-				yVr[1] = yVr_initial[1];
-				T = ranges->at(p).at(1) + 273.13 + double(n)*dt;
-				sseos_v( yVr, ranges->at(p).at(0), T, params );
+				T = ranges->at(i).at(1) + 273.13 + double(n)*dt;
+				p->Tr = T/ params[2];
+
+				sseos_yv_finder( p );
+
 				out << T << " "
-				    << params[1] * yVr[1] << " "
-				    << yVr[0]
+				    << params[1] * p->Vr << " "
+				    << p->y
 				    << "\n";
 			}
 			out << "\n";
 		}
 		out.close();
+		
+		delete p;
+
 		return true;
 	}
 	out.close();

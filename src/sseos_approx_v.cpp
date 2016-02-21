@@ -1,13 +1,12 @@
 #include <math.h>
+#include "sseos_params.h"
 #include "sseos_approx_v.h"
 
-double *sseos_approx_v( double *yVr,
-                        const double P, const double T,
-                        const double *params )
+void sseos_approx_v( struct sseos_params *p )
 {
-	const double Pr    = P/params[0];
-	const double Tr    = T/params[2];
-	const double Tr32  = pow(Tr, 3.0/2.0);
+	// const double Pr    = P/params[0];
+	// const double Tr    = T/params[2];
+	const double Tr32  = pow(p->Tr, 3.0/2.0);
 
 	// Constants for Vr
 	const double a[] = { -0.10346 , 23.854 , -0.1320, -333.7, 1032.5, -1329.9 };
@@ -20,18 +19,17 @@ double *sseos_approx_v( double *yVr,
 	double lnVr;
 	lnVr = a[0] +
 	       a[1]*Tr32 +
-	       Pr*( a[2] + ( a[3] + a[4]*Pr + a[5]*Pr*Pr)*Tr*Tr);
+	       p->Pr*( a[2] + ( a[3] + a[4]*p->Pr + a[5]*p->Pr*p->Pr)*p->Tr*p->Tr);
 
-	yVr[1] = exp( lnVr );
+	p->Vr = exp( lnVr );
 
 	// Utracki-Simha 2001 equation (11).
 	double h = b[0] +
-	           b[1]/yVr[1] +
+	           b[1]/p->Vr +
 	           b[2]*Tr32 +
-	           b[3]/yVr[1]/yVr[1] +
+	           b[3]/p->Vr/p->Vr +
 	           b[4]*Tr32*Tr32;
 
-	yVr[0] = 1.0 - h;
+	p->y = 1.0 - h;
 
-	return( yVr );
 }

@@ -2,7 +2,6 @@
 #include <iostream>
 #include <math.h>
 #include "fitstatistics.h"
-#include "sseos_v.h"
 
 
 void FitStatistics::SetFitValues( const double *fitvals, const double *yfitvals ) {

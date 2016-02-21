@@ -15,13 +15,13 @@ void handler ( const char * reason,
 int
 sseos_yv_finder_fcn( const gsl_vector* x, void *params, gsl_vector* f)
 {
-	struct sseos_yv_finder_params *p = (struct sseos_yv_finder_params *) params;
+	struct sseos_params *p = (struct sseos_params *) params;
 
-	const double y  = gsl_vector_get(x, 0);
-	const double Vr = gsl_vector_get(x, 1);
+	p->y  = gsl_vector_get(x, 0);
+	p->Vr = gsl_vector_get(x, 1);
 
-	gsl_vector_set( f, 0, sseos_yv_f0( y, Vr, p->Tr, p->c, p->s, true ) );
-	gsl_vector_set( f, 1, sseos_yv_f1( y, p->Pr, Vr, p->Tr ) );
+	gsl_vector_set( f, 0, sseos_yv_f0( p, true ) );
+	gsl_vector_set( f, 1, sseos_yv_f1( p ) );
 
 	return GSL_SUCCESS;
 }
@@ -29,37 +29,15 @@ sseos_yv_finder_fcn( const gsl_vector* x, void *params, gsl_vector* f)
 int
 sseos_yv_finder_df( const gsl_vector* x, void *params, gsl_matrix* J)
 {
-	struct sseos_yv_finder_params *p = (struct sseos_yv_finder_params *) params;
+	struct sseos_params *p = (struct sseos_params *) params;
 
-	double y  = gsl_vector_get(x, 0);
-	const double Vr = gsl_vector_get(x, 1);
+	p->y  = gsl_vector_get(x, 0);
+	p->Vr = gsl_vector_get(x, 1);
 
-	const double c   = p->c;
-	const double s   = p->s;
-	const double A   = p->A;
-	const double B   = p->B;
-	const double Qsq = 1.0/(y*y*Vr*Vr);
-	const double eta = y*pow(Qsq/2.0,1.0/6.0);
-
-	const double dQ0   = -1.0/(y*y*Vr);
-	const double dQ1   = -1.0/(y*Vr*Vr);
-	const double deta0 = 2.0*eta/3.0/y;
-	const double deta1 = -1.0*eta/3.0/Vr;
-
-
-	const double df00 = -1.0*deta0/3.0/(1.0-eta) + (eta-1.0/3.0)/(1.0-eta)/(1.0-eta)*deta0 - Qsq*(3.0*A*Qsq - 2.0*B)/6.0/p->Tr - 2.0*(3.0*A*Qsq - B)*dQ0/3.0/Vr/p->Tr + ( log(1.0-y)/y/y + 1.0/y/(1.0-y) )*s/3.0/c;
-
-
-	const double df01 = -1.0*deta1/3.0/(1.0-eta) + (eta-1.0/3.0)/(1.0-eta)/(1.0-eta)*deta1 - 2.0*(3.0*A*Qsq - B)*dQ1/3.0/Vr/p->Tr;
-
-	const double df10 = -1.0*deta0/(1.0-eta)/(1.0-eta) - 2.0*Qsq*(A*Qsq-B)/p->Tr - 2.0*(4.0*A*Qsq - 2.0*B)*dQ0/Vr/p->Tr;
-
-	const double df11 = p->Pr/p->Tr - deta1/(1.0-eta)/(1.0-eta) - 2.0*(4.0*A*Qsq - 2.0*B)*dQ1/Vr/p->Tr;
-
-	gsl_matrix_set( J, 0, 0, isnan(df00)?2.0:df00);
-	gsl_matrix_set( J, 0, 1, isnan(df01)?2.0:df01);
-	gsl_matrix_set( J, 1, 0, isnan(df10)?2.0:df10);
-	gsl_matrix_set( J, 1, 1, isnan(df11)?2.0:df11);
+	gsl_matrix_set( J, 0, 0, sseos_yv_df0dy ( p ) );
+	gsl_matrix_set( J, 0, 1, sseos_yv_df0dVr( p ) );
+	gsl_matrix_set( J, 1, 0, sseos_yv_df1dy ( p ) );
+	gsl_matrix_set( J, 1, 1, sseos_yv_df1dVr( p ) );
 
 	return GSL_SUCCESS;
 }
@@ -74,14 +52,9 @@ sseos_yv_finder_fdf( const gsl_vector* x, void *params,
 	return GSL_SUCCESS;
 }
 
-double*
-sseos_yv_finder( double *yVr,
-                 const double c, const double s,
-                 const double A, const double B,
-                 const double Pr,const double Tr)
+void
+sseos_yv_finder( struct sseos_params *params )
 {
-	struct sseos_yv_finder_params params = { c, s, A, B, Pr, Tr };
-
 	const gsl_multiroot_fdfsolver_type *T;
 	gsl_multiroot_fdfsolver *solver;
 
@@ -92,14 +65,14 @@ sseos_yv_finder( double *yVr,
 	gsl_multiroot_function_fdf f = {&sseos_yv_finder_fcn,
 	                                &sseos_yv_finder_df,
 	                                &sseos_yv_finder_fdf,
-	                                n, &params};
+	                                n, params};
 
 
 	gsl_vector *x = gsl_vector_alloc(n);
 
 	// Initial guess
-	gsl_vector_set(x, 0, yVr[0]);
-	gsl_vector_set(x, 1, yVr[1]);
+	gsl_vector_set(x, 0, params->y);
+	gsl_vector_set(x, 1, params->Vr);
 
 	T = gsl_multiroot_fdfsolver_gnewton;
 	solver = gsl_multiroot_fdfsolver_alloc(T,2);
@@ -132,15 +105,17 @@ sseos_yv_finder( double *yVr,
 	/* restore original handler */
 	gsl_set_error_handler(old_handler);
 
-	yVr[0] = gsl_vector_get (solver->x, 0);
-	yVr[1] = gsl_vector_get (solver->x, 1);
+	// yVr[0] = gsl_vector_get (solver->x, 0);
+	// yVr[1] = gsl_vector_get (solver->x, 1);
+
+	params->y  = gsl_vector_get( solver->x, 0);
+	params->Vr = gsl_vector_get( solver->x, 1);
+
 	gsl_multiroot_fdfsolver_free(solver);
 	gsl_vector_free(x);
 
 	if ( status == GSL_EDOM )
 	{
-		printf("Vr: %f\n", yVr[1]);
+		printf("Vr: %f\n", params->Vr);
 	}
-
-	return yVr;
 }
