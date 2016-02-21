@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <algorithm>
+#include "sortdata.h"
 
 bool isValidTemperature( const std::vector< std::vector< double > > *ranges,
                          const double P, const double T)
@@ -134,18 +134,7 @@ bool readPVTblock( const std::string filename,
 	}
 
 	// Sort pvtd by P, sub-sorted by T.
-	std::sort( pvtd.begin(), pvtd.end(),
-	           [](const std::vector< double >& a, const std::vector< double >&b)
-	             { return (a[0] == b[0])?a[2] < b[2]:a[0] < b[0]; } );
-
-	for( unsigned int i=0; i < pvtd.size(); ++i)
-	{
-		std::vector< double> pt = { pvtd[i][0], pvtd[i][2] };
-		pts->push_back( pt );
-
-		volumes->push_back( pvtd[i][1] );
-		variances->push_back( pvtd[i][3] );
-	}
+	sortdata( pvtd, pts, volumes, variances );
 
 	return(true);
 }

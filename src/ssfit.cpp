@@ -18,20 +18,27 @@ void SSFitData( const double *params, bool APPROXIMATE ) {
 
 	struct sseos_params *p = new struct sseos_params;
 
+	p->y  = yVr_initial[0];
+	p->Vr = yVr_initial[1];
+	p->s  = params[4];
+	p->c  = p->s/3.0; // Constraint: s = 3c
+
 	const std::vector< std::vector< double > >& Inputs = minimize.GetInputValues();
 
 	double  Fit[ Inputs.size() ];
 	double yFit[ Inputs.size() ];
 
+	double Pprev = Inputs[0][0] / params[0];
+
 	for(unsigned int n = 0; n < Inputs.size(); n++) {
 		p->Pr = Inputs[n][0] / params[0];
 		p->Tr = Inputs[n][1] / params[2];
-		p->s  = params[4];
-		p->c  = p->s/3.0; // Constraint: s = 3c
-		// Reset initial guesses for y and Vr
-		p->y  = yVr_initial[0];
-		p->Vr = yVr_initial[1];
-
+		if ( p->Pr != Pprev )
+		{
+			// Reset initial guesses for y and Vr for a new pressure sequence.
+			p->y  = yVr_initial[0];
+			p->Vr = yVr_initial[1];
+		}
 		if ( APPROXIMATE )
 			sseos_approx_v( p );
 		else
@@ -39,6 +46,8 @@ void SSFitData( const double *params, bool APPROXIMATE ) {
 
 		yFit[n] = p->y;
 		Fit[n] = params[1] * p->Vr;
+
+		Pprev = p->Pr;
 
 	}
 

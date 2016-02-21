@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include "sortdata.h"
 
 bool readPVT( const std::string filename,
               std::vector< std::vector< double > > *pts,
@@ -9,6 +10,9 @@ bool readPVT( const std::string filename,
               std::vector< double > *variances,
               bool isKelvin)
 {
+	// P, V, T and variances in V.
+	std::vector< std::vector< double > > pvtd;
+
 	// Read in the data
 	double data_p,
 	       data_v,
@@ -25,28 +29,25 @@ bool readPVT( const std::string filename,
 			l >> data_t;
 			l >> data_v;
 
-			std::vector< double > pt;
-			// Convert MPa to Bar (*10.0)
-			// pressures.push_back(data_p*10.0);
-			pt.push_back(data_p);
-
-			volumes->push_back(data_v);
-
 			// Temperatures must be in Kelvin
-			if ( isKelvin )
-				pt.push_back(data_t);
-			else
-				pt.push_back(data_t+273.13);
+			if ( !isKelvin )
+				data_t += 273.13;
 
-			pts->push_back(pt);
 			// use standard deviation of 0.0004 for volumes (volumes are
-			// measured to the fourth decimal point); Works well for measurements
-			// from Zoller's PVT machine.  Variance equals the standard deviation
-			// squared
-			variances->push_back( 0.0004*0.0004);
+			// measured to the fourth decimal point); Works well for
+			// measurements from Zoller's PVT machine.  Variance equals the
+			// standard deviation squared
+			std::vector< double >vals = {data_p,
+			                             data_v,
+			                             data_t,
+			                             0.0004*0.0004};
+			pvtd.push_back( vals );
 		}
 	}
 	ifp.close();
+
+	// Sort pvtd by P, sub-sorted by T.
+	sortdata( pvtd, pts, volumes, variances );
 
 	return(true);
 }
