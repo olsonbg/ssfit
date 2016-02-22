@@ -40,7 +40,7 @@ bool curves( const std::string *saveprefix,
 			double T;
 			for(unsigned int n = 0; n != N; ++n)
 			{
-				T = ranges->at(i).at(1) + 273.13 + double(n)*dt;
+				T = ranges->at(i).at(1) + double(n)*dt;
 				p->Tr = T/ params[2];
 
 				sseos_yv_finder( p );
