@@ -136,6 +136,9 @@ void Help(const char *name)
 	HelpOption("--numpoints <number>",
 	           "-n <number>",
 	           "Number of points to use for curve generation.");
+	HelpOption("--yonly",
+	           "-y",
+	           "Only calculate y. Used to T < Tg. pstar, vstar, and tstar are fixed.");
 	HelpOption("--save <filename>",
 	           "-s <filename>",
 	           "Name use as prefix for saving data. If not specified then 'default' will be used. The type of data will be appended to this, for example: using '--save Polystyrene' will save data as 'Polystyrene-PVTVy.dat'.");
