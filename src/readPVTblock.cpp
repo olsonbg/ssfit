@@ -12,7 +12,7 @@ bool isValidTemperature( const std::vector< std::vector< double > > *ranges,
 	{
 		if( ranges->at(i).at(0) == P )
 			if ( ( T >= ranges->at(i).at(1) ) &&
-                 ( T <= ranges->at(i).at(2) ) )
+			     ( T <= ranges->at(i).at(2) ) )
 				return(true);
 	}
 	return(false);
@@ -52,8 +52,8 @@ bool readTempRanges( const std::string filename,
 				if ( r.size() != 3 )
 				{
 					std::cout << "Expected lines with 3 values in "
-				              << filename
-				              << ".\n";
+					          << filename
+					          << ".\n";
 					return(false);
 				}
 				else
@@ -126,9 +126,9 @@ bool readPVTblock( const std::string filename,
 									// Zoller's PVT machine.  Variance equals the
 									// standard deviation squared
 									std::vector< double >vals = {pressure[n-1],
-								                                 value,
-								                                 data_t,
-								                                 0.0004*0.0004};
+									                             value,
+									                             data_t,
+									                             0.0004*0.0004};
 
 									pvtd.push_back( vals );
 								}
