@@ -27,7 +27,13 @@ bool process( const std::string ifile, const std::string ifileTempRanges,
 	std::vector<double> var;
 	// Range of temperatures, for each pressure, to use for fitting and curve
 	// generation.
-	std::vector< std::vector< double > > ranges;
+	std::vector< std::vector< double > > *ranges = new std::vector< std::vector< double > >;
+
+	if (ifileTempRanges.empty() )
+	{
+		delete ranges;
+		ranges = NULL;
+	}
 
 	std::stringstream ofilename;
 	ofilename << saveprefix << "-summary.dat";
@@ -35,22 +41,29 @@ bool process( const std::string ifile, const std::string ifileTempRanges,
 	outlog log(ofilename.str().c_str());
 
 	// Get valid temperature ranges
-	if( !ifileTempRanges.empty() &&
-	    !readTempRanges(ifileTempRanges, &ranges, flags & Flags::KELVIN) )
+	if( ( ranges != NULL) &&
+	    !readTempRanges(ifileTempRanges, ranges, flags & Flags::KELVIN) )
 	{
 		std::cout << "Error reading " << ifileTempRanges << "\n";
+		delete ranges;
 		return(false);
 	}
 
 	if ( flags & Flags::BLOCKDATA )
 	{
-		if( !readPVTblock( ifile, &pts, &volumes, &var, &ranges, flags & Flags::KELVIN ) )
+		if( !readPVTblock( ifile, &pts, &volumes, &var, ranges, flags & Flags::KELVIN ) )
+		{
+			if ( ranges != NULL ) delete ranges;
 			return(false);
+		}
 	}
 	else
 	{
-		if( !readPVT( ifile, &pts, &volumes, &var, &ranges,  flags & Flags::KELVIN ) )
+		if( !readPVT( ifile, &pts, &volumes, &var, ranges,  flags & Flags::KELVIN ) )
+		{
+			if ( ranges != NULL ) delete ranges;
 			return(false);
+		}
 	}
 
 	if ( flags & Flags::DATAONLY )
@@ -72,6 +85,7 @@ bool process( const std::string ifile, const std::string ifileTempRanges,
 
 			Pprev = pts[i][0];
 		}
+		if ( ranges != NULL ) delete ranges;
 		return(true);
 	}
 
@@ -86,6 +100,7 @@ bool process( const std::string ifile, const std::string ifileTempRanges,
 		yfit( ofilename.str(), Pstar, Vstar, Tstar );
 		save_PVTy( &saveprefix );
 
+		if ( ranges != NULL ) delete ranges;
 		return true;
 	}
 
@@ -101,9 +116,10 @@ bool process( const std::string ifile, const std::string ifileTempRanges,
 		save_TVV( &saveprefix );
 
 		if ( flags & Flags::CURVES )
-			curves( &saveprefix, fitresults, &ranges, yVr_initial, numpoints );
+			curves( &saveprefix, fitresults, ranges, yVr_initial, numpoints );
 
 	}
 
+	if ( ranges != NULL ) delete ranges;
 	return true;
 }

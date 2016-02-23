@@ -7,6 +7,9 @@
 bool isValidTemperature( const std::vector< std::vector< double > > *ranges,
                          const double P, const double T)
 {
+	if ( ranges == NULL )
+		return true;
+
 	std::vector<double>::iterator it;
 	for( unsigned int i=0; i < ranges->size(); ++i)
 	{
