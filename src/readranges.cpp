@@ -55,6 +55,8 @@ bool readPressureRanges( const std::string filename,
                          std::vector< std::vector< double > > *ranges,
                          bool isKelvin)
 {
+	std::cout << "-----------------------\n";
+
 	std::ifstream ifp(filename.c_str(),std::ios::in);
 	if ( ifp.is_open() )
 	{

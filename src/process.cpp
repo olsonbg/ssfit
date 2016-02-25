@@ -14,7 +14,9 @@
 
 extern FitStatistics minimize;
 
-bool process( const std::string ifile, const std::string ifileTempRanges,
+bool process( const std::string ifile,
+              const std::string ifileTempRanges,
+              const std::string ifilePressRanges,
               const std::string saveprefix,
               const double Pstar, const double Vstar, const double Tstar,
               const unsigned int numpoints,
@@ -28,12 +30,12 @@ bool process( const std::string ifile, const std::string ifileTempRanges,
 	std::vector<double> var;
 	// Range of temperatures, for each pressure, to use for fitting and curve
 	// generation.
-	std::vector< std::vector< double > > *ranges = new std::vector< std::vector< double > >;
+	std::vector< std::vector< double > > *Tranges = new std::vector< std::vector< double > >;
 
 	if (ifileTempRanges.empty() )
 	{
-		delete ranges;
-		ranges = NULL;
+		delete Tranges;
+		Tranges = NULL;
 	}
 
 	std::stringstream ofilename;
@@ -41,28 +43,30 @@ bool process( const std::string ifile, const std::string ifileTempRanges,
 
 	outlog log(ofilename.str().c_str());
 
-	// Get valid temperature ranges
-	if( ( ranges != NULL) &&
-	    !readTempRanges(ifileTempRanges, ranges, flags & Flags::KELVIN) )
+	// Get valid temperature Tranges
+	if( ( Tranges != NULL) &&
+	    !readTempRanges(ifileTempRanges, Tranges, flags & Flags::KELVIN) )
 	{
 		std::cout << "Error reading " << ifileTempRanges << "\n";
-		delete ranges;
+
+		if ( Tranges != NULL ) delete Tranges;
+
 		return(false);
 	}
 
 	if ( flags & Flags::BLOCKDATA )
 	{
-		if( !readPVTblock( ifile, &pts, &volumes, &var, ranges, flags & Flags::KELVIN ) )
+		if( !readPVTblock( ifile, &pts, &volumes, &var, Tranges, flags & Flags::KELVIN ) )
 		{
-			if ( ranges != NULL ) delete ranges;
+			if ( Tranges != NULL ) delete Tranges;
 			return(false);
 		}
 	}
 	else
 	{
-		if( !readPVT( ifile, &pts, &volumes, &var, ranges,  flags & Flags::KELVIN ) )
+		if( !readPVT( ifile, &pts, &volumes, &var, Tranges,  flags & Flags::KELVIN ) )
 		{
-			if ( ranges != NULL ) delete ranges;
+			if ( Tranges != NULL ) delete Tranges;
 			return(false);
 		}
 	}
@@ -86,7 +90,7 @@ bool process( const std::string ifile, const std::string ifileTempRanges,
 
 			Pprev = pts[i][0];
 		}
-		if ( ranges != NULL ) delete ranges;
+		if ( Tranges != NULL ) delete Tranges;
 		return(true);
 	}
 
@@ -101,7 +105,7 @@ bool process( const std::string ifile, const std::string ifileTempRanges,
 		yfit( ofilename.str(), Pstar, Vstar, Tstar );
 		save_PVTy( &saveprefix );
 
-		if ( ranges != NULL ) delete ranges;
+		if ( Tranges != NULL ) delete Tranges;
 		return true;
 	}
 
@@ -117,10 +121,37 @@ bool process( const std::string ifile, const std::string ifileTempRanges,
 		save_TVV( &saveprefix );
 
 		if ( flags & Flags::CURVES )
-			curves( &saveprefix, fitresults, ranges, yVr_initial, numpoints );
+		{
+			// Range of temperatures, for each pressure, to use for fitting and
+			// curve generation.
+			std::vector< std::vector< double > > *Pranges = new std::vector< std::vector< double > >;
+
+			if (ifilePressRanges.empty() )
+			{
+				delete Pranges;
+				Pranges = NULL;
+			}
+			// Get valid pressure ranges
+			if( ( Pranges != NULL) &&
+				!readPressureRanges(ifilePressRanges, Pranges, flags & Flags::KELVIN) )
+			{
+				std::cout << "Error reading " << ifilePressRanges << "\n";
+
+				if ( Tranges != NULL ) delete Tranges;
+				if ( Pranges != NULL ) delete Pranges;
+
+				return false;
+			}
+
+			curves( &saveprefix, fitresults,
+			        Tranges, Pranges,
+			        yVr_initial, numpoints );
+
+			if ( Pranges != NULL ) delete Pranges;
+		}
 
 	}
 
-	if ( ranges != NULL ) delete ranges;
+	if ( Tranges != NULL ) delete Tranges;
 	return true;
 }

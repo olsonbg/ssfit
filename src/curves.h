@@ -16,9 +16,22 @@
  *
  * return \p TRUE on success, \p FALSE otherwise
  */
+bool curves_TVy( std::ofstream& out,
+                 const double *params,
+                 const std::vector< std::vector< double > > *ranges,
+                 const double *yVr_initial,
+                 const unsigned int N );
+
+bool curves_PVy( std::ofstream& out,
+                 const double *params,
+                 const std::vector< std::vector< double > > *ranges,
+                 const double *yVr_initial,
+                 const unsigned int N );
+
 bool curves( const std::string *saveprefix,
              const double *params,
-             const std::vector< std::vector< double > > *ranges,
+             const std::vector< std::vector< double > > *Tranges,
+             const std::vector< std::vector< double > > *Pranges,
              const double *yVr_initial,
              const unsigned int numpoints);
 

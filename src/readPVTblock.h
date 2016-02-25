@@ -1,6 +1,6 @@
 /**
  * \file
- * \brief Read PVT data, and ranges file
+ * \brief Read PVT data
  */
 #ifndef _READPVTBLOCK_H
 #define _READPVTBLOCK_H
@@ -31,25 +31,6 @@ bool readPVTblock( const std::string filename,
                    std::vector< double > *variances,
                    const std::vector< std::vector< double > > *ranges,
                    bool isKelvin );
-
-/**
- * Read temperature ranges
- *
- * Data is in three column format, with each column separated by whitespace.
- * - Columns
- *   -# Pressure
- *   -# Minimum temperature
- *   -# Maximum temperature
- *
- * \param[in]  filename  Name of the ranges data file
- * \param[in]  ranges    Temperature ranges, for each pressure, to import data
- * \param[in]  isKelvin  Boolean specifying that the data temperatures are in Kelvin
- *
- * \return \p TRUE on success, \p FALSE otherwise.
- */
-bool readTempRanges( const std::string filename,
-                     std::vector< std::vector< double > > *ranges,
-                     bool isKelvin );
 
 /**
  * Check if a data point is valid, as specified by \p ranges

@@ -9,7 +9,8 @@
 int main(int argc, char *argv[]) {
 	// char ifile[4097] = "input.dat";
 	std::string ifile;
-	std::string ifileRanges;
+	std::string ifileTRanges;
+	std::string ifilePRanges;
 	std::string saveprefix = "default";
 
 	double pstar = 0.0;
@@ -47,7 +48,8 @@ int main(int argc, char *argv[]) {
 			/* These options don’t set a flag.
 			   We distinguish them by their indices. */
 			{"input",       required_argument, 0, 'i'},
-			{"ranges",      required_argument, 0, 'r'},
+			{"tranges",     required_argument, 0, 'r'},
+			{"pranges",     required_argument, 0, 'R'},
 			{"save",        required_argument, 0, 's'},
 			{"pstar",       required_argument, 0, 'p'},
 			{"vstar",       required_argument, 0, 'v'},
@@ -63,7 +65,7 @@ int main(int argc, char *argv[]) {
 		/* getopt_long stores the option index here. */
 		int option_index = 0;
 
-		c = getopt_long (argc, argv, "i:r:s:p:v:t:n:bdyh",
+		c = getopt_long (argc, argv, "i:r:R:s:p:v:t:n:bdyh",
 		                 long_options, &option_index);
 
 		/* Detect the end of the options. */
@@ -83,7 +85,10 @@ int main(int argc, char *argv[]) {
 				ifile = optarg;
 				break;
 			case 'r':
-				ifileRanges = optarg;
+				ifileTRanges = optarg;
+				break;
+			case 'R':
+				ifilePRanges = optarg;
 				break;
 			case 's':
 				saveprefix = optarg;
@@ -138,19 +143,20 @@ int main(int argc, char *argv[]) {
 		std::cout << "Must specify values for pstar, vstar, and tstar\n";
 		return EXIT_FAILURE;
 	}
-	if ( (flags & Flags::BLOCKDATA) && ( !(flags & Flags::DATAONLY) && ifileRanges.empty() ) )
+	if ( (flags & Flags::BLOCKDATA) && ( !(flags & Flags::DATAONLY) && ifileTRanges.empty() ) )
 	{
 		std::cout << "Must specify a temperature ranges file when using blockdata\n";
 		return EXIT_FAILURE;
 	}
 
-	if ( (flags & Flags::CURVES) && ifileRanges.empty() )
+	if ( (flags & Flags::CURVES) && ifileTRanges.empty() )
 	{
 		std::cout << "A ranges file is needed to generate curves.\n";
 		return EXIT_FAILURE;
 	}
 
-	process(ifile, ifileRanges, saveprefix, pstar, vstar, tstar, numpoints,flags);
+	process(ifile, ifileTRanges, ifilePRanges, saveprefix,
+	        pstar, vstar, tstar, numpoints,flags);
 
 	return EXIT_SUCCESS;
 }

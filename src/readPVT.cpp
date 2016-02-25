@@ -35,8 +35,7 @@ bool readPVT( const std::string filename,
 				l >> data_v;
 
 				// Temperatures must be in Kelvin
-				if ( !isKelvin )
-					data_t += 273.13;
+				if ( !isKelvin ) data_t += 273.15;
 
 				if ( isValidTemperature(ranges, data_p, data_t) )
 				{

@@ -22,5 +22,24 @@
 bool readTempRanges( const std::string filename,
                      std::vector< std::vector< double > > *ranges,
                      bool isKelvin );
+
+/**
+ * Read pressure ranges
+ *
+ * Data is in three column format, with each column separated by whitespace.
+ * - Columns
+ *   -# Temperature
+ *   -# Minimum pressure
+ *   -# Maximum pressure
+ *
+ * \param[in]  filename  Name of the ranges data file
+ * \param[in]  ranges    Pressure ranges, for each temperature, to generate curves for
+ * \param[in]  isKelvin  Boolean specifying that the data temperatures are in Kelvin
+ *
+ * \return \p TRUE on success, \p FALSE otherwise.
+ */
+bool readPressureRanges( const std::string filename,
+                         std::vector< std::vector< double > > *ranges,
+                         bool isKelvin);
 #endif // _READRANGES_H
 

@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
+#include "readranges.h"
 #include "sortdata.h"
 
 bool isValidTemperature( const std::vector< std::vector< double > > *ranges,
@@ -21,54 +23,6 @@ bool isValidTemperature( const std::vector< std::vector< double > > *ranges,
 	return(false);
 }
 
-bool readTempRanges( const std::string filename,
-                     std::vector< std::vector< double > > *ranges,
-                     bool isKelvin)
-{
-	std::ifstream ifp(filename.c_str(),std::ios::in);
-	if ( ifp.is_open() )
-	{
-		std::string line;
-		while( std::getline(ifp, line) )
-		{
-			if( line[0] != '#' )
-			{
-				std::istringstream l(line);
-				std::vector<double> r;
-				double v;
-				if ( l >> v ) r.push_back(v);
-				if ( l >> v )
-				{
-					if (isKelvin)
-						r.push_back(v);
-					else
-						r.push_back(v + 273.13);
-				}
-				if ( l >> v )
-				{
-					if (isKelvin)
-						r.push_back(v);
-					else
-						r.push_back(v + 273.13);
-				}
-
-				if ( r.size() != 3 )
-				{
-					std::cout << "Expected lines with 3 values in "
-					          << filename
-					          << ".\n";
-					return(false);
-				}
-				else
-					ranges->push_back(r);
-			}
-		}
-		ifp.close();
-		return true;
-	}
-
-	return false;
-}
 
 bool readPVTblock( const std::string filename,
                    std::vector< std::vector< double > > *pts,
@@ -112,7 +66,7 @@ bool readPVTblock( const std::string filename,
 							if ( n == 0 )
 							{
 								// Temperatures must be in Kelvin
-								data_t = isKelvin?value:value + 273.13;
+								data_t = isKelvin?value:value + 273.15;
 							}
 							else
 							{
