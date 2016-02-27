@@ -180,6 +180,7 @@ bool ssfit( double *results, const std::string ofilename,
 		}
 	}
 
+
 	log << "Minimizer - ";
 	switch( min.Status() )
 	{
@@ -214,18 +215,27 @@ bool ssfit( double *results, const std::string ofilename,
 	results[3] = xs[3];
 	results[4] = xs[4];
 
-	log << "\n" << min.VariableName(0) << ": " << xs[0];
-	if ( min.CovMatrix(0,0) != 0.0 )
-		log << " +/- " << xe[0];
-
-	log << "\n" << min.VariableName(1) << ": " << xs[1];
-	if ( min.CovMatrix(1,1) != 0.0 )
-		log << " +/- " << xe[1];
-
-	log << "\n" << min.VariableName(2) << ": " << xs[2];
-	if ( min.CovMatrix(2,2) != 0.0 )
-		log << " +/- " << xe[2];
 	log << "\n";
+	for( unsigned int i=0; i < min.NDim(); ++i )
+	{
+		double errLow=0.0;
+		double errUp=0.0;
+
+		if ( (min.VariableName(i) == "s") ||
+		     (min.VariableName(i) == "c") )
+			continue;
+
+		log << min.VariableName(i) << ": " << xs[i];
+		if ( min.CovMatrix(i,i) != 0.0 )
+		{
+			log << " +/- " << xe[i];
+
+			// Try to get more accurate errors using Minos (Asymmetric errors)
+			if ( min.GetMinosError( i, errLow, errUp ) )
+				log << " [" << errLow << ", +" <<errUp << "]";
+		}
+		log << "\n";
+	}
 
 	// min.PrintResults();
 

@@ -72,7 +72,7 @@ bool readPressureRanges( const std::string filename,
 				if ( l >> v ) r.push_back(v);
 				if ( l >> v ) r.push_back(v);
 
-				while ( l >> v ) r.push_back(v) // Check for any extra values
+				while ( l >> v ) r.push_back(v); // Check for any extra values
 
 				if ( r.size() != 3 )
 				{
