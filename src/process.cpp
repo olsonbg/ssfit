@@ -71,7 +71,8 @@ bool process( const std::string ifile,
 		}
 	}
 
-	if ( flags & Flags::DATAONLY )
+	if ( ( flags & Flags::DATAONLY ) &&
+	     ( pts.size() != 0 ) )
 	{
 		double Pprev = pts[0][0];
 		log << "# " << pts[0][0] << "\n";
@@ -100,7 +101,8 @@ bool process( const std::string ifile,
 
 	// Only fit y. Typically used for temperature below the glass transition,
 	// where the SS-EOS equilibrium condition does not hold.
-	if ( flags & Flags::YONLY )
+	if ( ( flags & Flags::YONLY ) &&
+	     ( pts.size() != 0 ) )
 	{
 		yfit( ofilename.str(), Pstar, Vstar, Tstar );
 		save_PVTy( &saveprefix );
@@ -113,44 +115,57 @@ bool process( const std::string ifile,
 	double fitresults[5];
 
 	// Do the fitting and save results.
-	if (ssfit(fitresults, ofilename.str(), Pstar, Vstar, Tstar, flags) )
+	if ( (pts.size() != 0) &&
+	     ssfit(fitresults, ofilename.str(), Pstar, Vstar, Tstar, flags) )
 	{
-		double yVr_initial[2] = { 0.90, 0.65 };
 
 		save_PVTVy( &saveprefix );
 		save_TVV( &saveprefix );
+	}
 
-		if ( flags & Flags::CURVES )
+	// Generate full curves using fit values.
+	if ( flags & Flags::CURVES )
+	{
+		// If no data read, then user just wants to generate a curve, so set
+		// fitresults to use the user supplied values.
+		if ( pts.size() == 0 )
 		{
-			// Range of temperatures, for each pressure, to use for fitting and
-			// curve generation.
-			std::vector< std::vector< double > > *Pranges = new std::vector< std::vector< double > >;
-
-			if (ifilePressRanges.empty() )
-			{
-				delete Pranges;
-				Pranges = NULL;
-			}
-			// Get valid pressure ranges
-			if( ( Pranges != NULL) &&
-				!readPressureRanges(ifilePressRanges, Pranges, flags & Flags::KELVIN) )
-			{
-				std::cout << "Error reading " << ifilePressRanges << "\n";
-
-				if ( Tranges != NULL ) delete Tranges;
-				if ( Pranges != NULL ) delete Pranges;
-
-				return false;
-			}
-
-			curves( &saveprefix, fitresults,
-			        Tranges, Pranges,
-			        yVr_initial, numpoints );
-
-			if ( Pranges != NULL ) delete Pranges;
+			fitresults[0] = Pstar;
+			fitresults[1] = Vstar;
+			fitresults[2] = Tstar;
+			fitresults[3] = 2.0;   // Not used.
+			fitresults[4] = 2.0;   // Not used.
 		}
 
+		double yVr_initial[2] = { 0.90, 0.65 };
+
+		// Range of pressures for each temperature to use for curve generation.
+		std::vector< std::vector< double > > *Pranges = new std::vector< std::vector< double > >;
+
+		if (ifilePressRanges.empty() )
+		{
+			delete Pranges;
+			Pranges = NULL;
+		}
+		// Get valid pressure ranges
+		if( ( Pranges != NULL) &&
+			!readPressureRanges(ifilePressRanges, Pranges, flags & Flags::KELVIN) )
+		{
+			std::cout << "Error reading " << ifilePressRanges << "\n";
+
+			if ( Tranges != NULL ) delete Tranges;
+			if ( Pranges != NULL ) delete Pranges;
+
+			return false;
+		}
+
+		curves( &saveprefix, fitresults,
+				Tranges, Pranges,
+				yVr_initial, numpoints );
+
+		if ( Pranges != NULL ) delete Pranges;
 	}
+
 
 	if ( Tranges != NULL ) delete Tranges;
 	return true;
