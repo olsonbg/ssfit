@@ -39,7 +39,7 @@ INCLUDE_DIRECTORIES("${PROJECT_BINARY_DIR}")
 
 IF( CMAKE_SYSTEM_NAME STREQUAL "Windows")
 	MESSAGE( "Making static binary." )
-	SET(CMAKE_EXE_LINKER_FLAGS "-static -static-libgcc")
+	SET(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++ -static")
 ENDIF( CMAKE_SYSTEM_NAME STREQUAL "Windows")
 
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
