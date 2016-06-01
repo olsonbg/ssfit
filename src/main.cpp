@@ -121,7 +121,6 @@ int main(int argc, char *argv[]) {
 			case 'h':
 			case '?':
 				Help( argv[0] );
-				break;
 			default:
 				return(1);
 		}

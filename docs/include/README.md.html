@@ -57,7 +57,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </style>
 <article class="markdown-body">
 <h1 id="ssfit">ssfit</h1>
-<p>A program to calculate the scaling parameters of the Simha-Somcynsky (SS) equation of state (EOS).</p>
+<p>A program to calculate the scaling parameters of the Simha-Somcynsky (SS) equation of state (EOS). The source code is hosted by GitHub at <a href="https://github.com/olsonbg/ssfit">https://www.github.com/olsonbg/ssfit</a></p>
 <h1 id="contents">Contents</h1>
 <ul>
 <li><a href="#description">Description</a></li>
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#save">PVTVy</a></li>
 <li><a href="#yonly">PVTy</a></li>
 <li><a href="#save">TVV</a></li>
-<li><a href="#curves">curves-PVy</a></li>
+<li><a href="#curves">curves</a></li>
 </ul></li>
 </ul>
 <p><strong>NOTE:</strong> Github does not render LaTeX equations in markdown; to see the equations try viewing this file, or generating the <a href="#documentation">documentation</a>, on your own system. You can also view the html rendered from this file at <a href="docs/include/README.md.html" class="uri">docs/include/README.md.html</a></p>
@@ -223,97 +223,104 @@ Where,
 <td align="left">Valid temperature ranges, for each pressure to use</td>
 </tr>
 <tr class="even">
+<td align="left"><a href="#pranges">pranges</a> <a name="pranges-t"></a></td>
+<td align="center">R</td>
+<td align="left">string</td>
+<td align="center">no</td>
+<td align="left">Valid pressure ranges, for each temperature to use</td>
+</tr>
+<tr class="odd">
 <td align="left"><a href="#yonly">yonly</a> <a name="yonly-t"></a></td>
 <td align="center">y</td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">Fit only <span class="math inline">\(y\)</span> values, <span class="math inline">\(P^*\)</span>, <span class="math inline">\(V^*\)</span>, and <span class="math inline">\(T^*\)</span> are fixed.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><a href="#blockdata">blockdata</a> <a name="blockdata-t"></a></td>
 <td align="center">b</td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">Input PVT data is in block format</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><a href="#save">save</a> <a name="save-t"></a></td>
 <td align="center">s</td>
 <td align="left">string</td>
 <td align="center">no</td>
 <td align="left">Prefix used for saving data</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><a href="#fixX">fixp</a> <a name="fitp-t"></a></td>
 <td align="center"></td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">Fix Pstar to the value specified on the command line</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><a href="#fixX">fixv</a> <a name="fitv-t"></a></td>
 <td align="center"></td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">Fix Vstar to the value specified on the command line</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><a href="#fixX">fixt</a> <a name="fitt-t"></a></td>
 <td align="center"></td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">Fix Tstar to the value specified on the command line</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><a href="#dataonly">dataonly</a> <a name="dataonly-y"></a></td>
 <td align="center">d</td>
 <td align="left"></td>
 <td align="center">no</td>
-<td align="left">Save the data in easy to plot files. This will not do and fitting</td>
+<td align="left">Save the data in easy to plot files. This will not do any fitting</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">data</td>
 <td align="center"></td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">Synonym for <a href="#dataonly-t">dataonly</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><a href="#scan">scan</a> <a name="scan-t"></a></td>
 <td align="center"></td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">Scan the fitting parameters around the minimum after an initial fitting, followed by a second round of fitting</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><a href="#curves">curves</a> <a name="curves-t"></a></td>
 <td align="center"></td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">Generate curves for nice plotting (see <a href="#numpoints-t">numpoints</a> option)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><a href="#approximate">approximate</a> <a name="approx-t"></a></td>
 <td align="center"></td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">Use an approximate equation for fitting</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">approx</td>
 <td align="center"></td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">Synonym for <a href="#approx-t">approximate</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><a href="#kelvin">kelvin</a> <a name="kelvin-t"></a></td>
 <td align="center"></td>
 <td align="left"></td>
 <td align="center">no</td>
 <td align="left">The input temperature are in Kelvin. The default is Celsius</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><a href="#numpoints">numpoints</a> <a name="numpoints-t"></a></td>
 <td align="center">n</td>
 <td align="left">integer</td>
@@ -383,7 +390,7 @@ Where,
 </tbody>
 </table>
 <h2 id="ranges">Ranges</h2>
-<p>Read temperature ranges</p>
+<p>Read temperature ranges. Fitting and curve generation will be limited to temperature ranges listed in this file.</p>
 <p>Data is in three column format, with each column separated by whitespace.</p>
 <ul>
 <li>Columns
@@ -391,6 +398,17 @@ Where,
 <li>Pressure</li>
 <li>Minimum temperature</li>
 <li>Maximum temperature</li>
+</ol></li>
+</ul>
+<h2 id="pranges">PRanges</h2>
+<p>Read pressure ranges. Curve generation will be limited to pressure ranges listed in this file.</p>
+<p>Data is in three column format, with each column separated by whitespace.</p>
+<ul>
+<li>Columns
+<ol style="list-style-type: decimal">
+<li>Temperature</li>
+<li>Minimum pressure</li>
+<li>Maximum pressure</li>
 </ol></li>
 </ul>
 <h2 id="yonly">yonly</h2>
@@ -415,6 +433,7 @@ Where,
 <p>After an initial minimization of <a href="#chi2"><span class="math inline">\(\chi^2\)</span></a>, the free parameters will be scanned around their current values in an attempt to refine the minimum. A second round of minimization will then be performed using the results of the scan as initial values for the free parameters.</p>
 <h2 id="curves">Curves</h2>
 <p>Generate curves, for specific volume (<span class="math inline">\(V\)</span>) and occupied fraction of lattice sites (<span class="math inline">\(y\)</span>), containing <a href="#numpoints">numpoints</a> data points for all pressures and temperatures specified in the <a href="#ranges">ranges</a> file.</p>
+<p>Default name of output file: <code>default-curves-TVy.dat</code></p>
 <ul>
 <li>Columns of output file
 <ol style="list-style-type: decimal">
@@ -422,9 +441,19 @@ Where,
 <li>Specific volume from fit</li>
 <li>Occupied fraction of lattice sites</li>
 </ol></li>
+<li>Data is grouped by pressure, with each pressure separated by a blank line.</li>
 </ul>
-<p>The results for each pressure are separated by a blank line.</p>
+<p>If the <a href="#pranges">pranges</a> option is specified, the following curve file will also be generated:</p>
 <p>Default name of output file: <code>default-curves-PVy.dat</code></p>
+<ul>
+<li>Columns of output file
+<ol style="list-style-type: decimal">
+<li>Measured pressure</li>
+<li>Measured specific volume</li>
+<li>Fit occupied fraction of lattice sites</li>
+</ol></li>
+<li>Data is grouped by temperature, with each group separated by a blank line</li>
+</ul>
 <p>The <code>default</code> string will be replaced by the string given by <a href="#save">save</a>, if any.</p>
 <h2 id="approximate">Approximate</h2>
 <p>The minimization is performed using the <a href="#sseos-03">approximate solution</a> to the SS-EOS, instead of the exact equations <a href="#sseos-01">(1)</a> and <a href="#sseos-02">(2)</a>.</p>
@@ -447,14 +476,15 @@ Where,
 <li>Fit occupied fraction</li>
 </ol></li>
 </ul></li>
-<li><code>default-PVV.dat</code>
+<li><code>default-TVV.dat</code>
 <ul>
 <li>Columns
 <ol style="list-style-type: decimal">
-<li>Measured pressure</li>
+<li>Measured temperature</li>
 <li>Measured specific volume</li>
 <li>Fit specific volume</li>
 </ol></li>
+<li>Data is grouped by pressure, with each group separated by a blank line.</li>
 </ul></li>
 </ul>
 </article>

@@ -2,7 +2,8 @@ ssfit
 =====
 
 A program to calculate the scaling parameters of the Simha-Somcynsky (SS)
-equation of state (EOS).
+equation of state (EOS). The source code is hosted by GitHub at
+[https://www.github.com/olsonbg/ssfit](https://github.com/olsonbg/ssfit)
 
 # Contents
 
@@ -15,7 +16,7 @@ equation of state (EOS).
     * [PVTVy](#save)
     * [PVTy](#yonly)
     * [TVV](#save)
-    * [curves-PVy](#curves)
+    * [curves](#curves)
 
 
 **NOTE:** Github does not render LaTeX equations in markdown; to see the
@@ -173,13 +174,14 @@ command line.
 |[vstar](#Xstar)                <a name="vstar-t"></a>       |   v        | real number   | yes       | Initial $V^*$ value to use for fitting|
 |[tstar](#Xstar)                <a name="tstar-t"></a>       |   t        | real number   | yes       | Initial $T^*$ value to use for fitting|
 |[ranges](#ranges)              <a name="ranges-t"></a>      |   r        | string        | no        | Valid temperature ranges, for each pressure to use |
+|[pranges](#pranges)            <a name="pranges-t"></a>     |   R        | string        | no        | Valid pressure ranges, for each temperature to use |
 |[yonly](#yonly)                <a name="yonly-t"></a>       |   y        |               | no        | Fit only $y$ values, $P^*$, $V^*$, and $T^*$ are fixed.
 |[blockdata](#blockdata)        <a name="blockdata-t"></a>   |   b        |               | no        | Input PVT data is in block format |
 |[save](#save)                  <a name="save-t"></a>        |   s        | string        | no        | Prefix used for saving data |
 |[fixp](#fixX)                  <a name="fitp-t"></a>        |            |               | no        | Fix Pstar to the value specified on the command line|
 |[fixv](#fixX)                  <a name="fitv-t"></a>        |            |               | no        | Fix Vstar to the value specified on the command line|
 |[fixt](#fixX)                  <a name="fitt-t"></a>        |            |               | no        | Fix Tstar to the value specified on the command line|
-|[dataonly](#dataonly)          <a name="dataonly-y"></a>    |   d        |               | no        | Save the data in easy to plot files. This will not do and fitting |
+|[dataonly](#dataonly)          <a name="dataonly-y"></a>    |   d        |               | no        | Save the data in easy to plot files. This will not do any fitting |
 |data                                                        |            |               | no        | Synonym for [dataonly](#dataonly-t)|
 |[scan](#scan)                  <a name="scan-t"></a>        |            |               | no        | Scan the fitting parameters around the minimum after an initial fitting, followed by a second round of fitting|
 |[curves](#curves)              <a name="curves-t"></a>      |            |               | no        | Generate curves for nice plotting (see [numpoints](#numpoints-t) option)|
@@ -213,7 +215,8 @@ Read PVT data that is in block format, with columns separated by whitespace.
 |    Tm    |    Vm1   |    Vm2   | ...  |    Vmn   |
 
 ## Ranges
-Read temperature ranges
+Read temperature ranges. Fitting and curve generation will be limited to
+temperature ranges listed in this file.
 
 Data is in three column format, with each column separated by whitespace.
 
@@ -221,6 +224,18 @@ Data is in three column format, with each column separated by whitespace.
     1. Pressure
     1. Minimum temperature
     1. Maximum temperature
+
+## PRanges
+Read pressure ranges. Curve generation will be limited to pressure ranges
+listed in this file.
+
+Data is in three column format, with each column separated by whitespace.
+
+  - Columns
+    1. Temperature
+    1. Minimum pressure
+    1. Maximum pressure
+
 
 ## yonly
 
@@ -268,14 +283,26 @@ Generate curves, for specific volume ($V$) and occupied fraction
 of lattice sites ($y$), containing [numpoints](#numpoints) data points for
 all pressures and temperatures specified in the [ranges](#ranges) file.
 
+Default name of output file: `default-curves-TVy.dat`
+
   - Columns of output file
     1. Measured temperature
     1. Specific volume from fit
     1. Occupied fraction of lattice sites
+  - Data is grouped by pressure, with each pressure separated by a blank
+    line.
 
-The results for each pressure are separated by a blank line.
+If the [pranges](#pranges) option is specified, the following curve file
+will also be generated:
 
 Default name of output file: `default-curves-PVy.dat`
+
+  - Columns of output file
+    1. Measured pressure
+    1. Measured specific volume
+    1. Fit occupied fraction of lattice sites
+  - Data is grouped by temperature, with each group separated by a blank
+    line
 
 The `default` string will be replaced by the string given by [save](#save),
 if any.
@@ -308,8 +335,10 @@ will be used. The default files generated are listed below.
           1. Measured temperature
           1. Fit specific volume
           1. Fit occupied fraction
-  - `default-PVV.dat`
+  - `default-TVV.dat`
       - Columns
-          1. Measured pressure
+          1. Measured temperature
           1. Measured specific volume
           1. Fit specific volume
+      - Data is grouped by pressure, with each group separated by a blank
+        line.

@@ -83,7 +83,7 @@ void Help(const char *name)
 	std::cerr << "\n";
 
 	std::cerr << "USAGE: " << "\n";
-	const char *usage = "-i <input filename> -p <number> -v <number> -t <number> [-r <ranges filename>] [-s <save filename prefix>] [-n <number>] [--kelvin] [--curves] [--scan] [--data] [--approximate] [--fixp] [--fixv] [--fixt] [--blockdata]";
+	const char *usage = "-i <input filename> -p <number> -v <number> -t <number> [-r <ranges filename>] [-R <pressure ranges filename>] [-s <save filename prefix>] [-n <number>] [--kelvin] [--curves] [--scan] [--data] [--approximate] [--fixp] [--fixv] [--fixt] [--blockdata]";
 	std::string USAGE = name;
 	USAGE += " ";
 	USAGE += usage;
@@ -123,7 +123,10 @@ void Help(const char *name)
 	           "Input file containing PVT data.");
 	HelpOption("--ranges <filename>",
 	           "-r <filename>",
-	           "File specifying the temperature ranges, for each pressure, to use for fitting a curve generating.");
+	           "File specifying the temperature ranges, for each pressure, to use for fitting and curve generating.");
+	HelpOption("--pranges <filename>",
+	           "-R <filename>",
+	           "File specifying the pressure ranges, for each temperature, to use for  curve generating.");
 	HelpOption("--pstar <number>",
 	           "-p <number>",
 	           "Initial Pstar value to use for fitting.");
@@ -148,7 +151,8 @@ void Help(const char *name)
 
 	std::cerr << "\n";
 	std::cerr << "Compiled on " << __DATE__;
-	std::cerr << " at " << __TIME__ << "." <<"\n";
-	std::cerr << "Author: Brian G. Olson (olsonbg@gmail.com)" <<"\n";
+	std::cerr << " at " << __TIME__ << ".\n";
+	std::cerr << "Author: Brian G. Olson (olsonbg@gmail.com)\n";
+	std::cerr << "https://github.com/olsonbg/ssfit\n";
 }
 
