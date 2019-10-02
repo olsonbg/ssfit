@@ -5,9 +5,9 @@
 #
 SET(MINUIT2_DIR "" CACHE PATH "Path to the minuit2 installation")
 
-FIND_PATH(MINUIT2_INCLUDE_DIR FCNBase.h
-          ${MINUIT2_DIR}/include/Minuit2/
-          /usr/include/Minuit2/ /usr/local/include/Minuit2/)
+FIND_PATH(MINUIT2_INCLUDE_DIR Minuit2/FCNBase.h
+          ${MINUIT2_DIR}/include
+          /usr/include /usr/local/include)
 
 FIND_LIBRARY(MINUIT2_LIBRARY NAMES Minuit2Base Minuit2
              PATHS ${MINUIT2_DIR}/lib /usr/lib /usr/local/lib)
@@ -26,9 +26,9 @@ IF (MINUIT2_FOUND)
       MESSAGE(STATUS "Found MINUIT2: ${MINUIT2_LIBRARY}")
    ENDIF (NOT MINUIT2_FIND_QUIETLY)
 ELSE (MINUIT2_FOUND)
-   IF (MINUIT2_FIND_REQUIRED)
+   IF (Minuit2_FIND_REQUIRED)
       MESSAGE(FATAL_ERROR "Could not find MINUIT2")
-   ENDIF (MINUIT2_FIND_REQUIRED)
+   ENDIF (Minuit2_FIND_REQUIRED)
 ENDIF (MINUIT2_FOUND)
 
 MARK_AS_ADVANCED(MINUIT2_INCLUDE_DIR MINUIT2_LIBRARY_DIR MINUIT2_LIBRARY)

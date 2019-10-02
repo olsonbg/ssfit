@@ -15,7 +15,7 @@ PROJECT(ssfit)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wformat \
                                         -Wstrict-aliasing -Wshadow -Wpacked \
                                         -Wmissing-noreturn -march=native \
-                                        -pipe -std=gnu++11" )
+                                        -pipe -std=gnu++11 -fopenmp" )
 
 # Use this for debugging with valgrind.
 set(CMAKE_CXX_FLAGS_DEBUG
