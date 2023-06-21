@@ -31,52 +31,36 @@ The Simha-Somcynsky equation of state, in terms of reduced variables
 $\widetilde{P}$, $\widetilde{V}$, $\widetilde{T}$:
 
 <a name="scaling"></a>
-\begin{equation}
-\widetilde{P} = \frac{P}{P^*}
-\end{equation}
+$$\widetilde{P} = \frac{P}{P^*}$$
 
-\begin{equation}
-\widetilde{V} = \frac{V}{V^*}
-\end{equation}
+$$\widetilde{V} = \frac{V}{V^*}$$
 
-\begin{equation}
-\widetilde{T} = \frac{T}{T^*}
-\end{equation}
+$$\widetilde{T} = \frac{T}{T^*}$$
 
 are given by equation (2) from Leszek Utracki, Robert Simha *Macromol. Theory
 Simul.* **2001**, 10, 17-24:
 
 <a name="sseos-01"></a>
-\begin{equation}
-  \frac{\widetilde{P}\widetilde{V}}{\widetilde{T}} - \frac{1}{1 - \eta} - \frac{2yQ^2}{\widetilde{T}}\left(AQ^2 - B\right) = 0 \qquad \mathrm{(Eq.~1)}
-\end{equation}
+$$\frac{\widetilde{P}\widetilde{V}}{\widetilde{T}} - \frac{1}{1 - \eta} - \frac{2yQ^2}{\widetilde{T}}\left(AQ^2 - B\right) = 0 \qquad \mathrm{(Eq.~1)}$$
 
 and equation (3) from Leszek Utracki, Robert Simha *Macromol. Theory Simul.*
 **2001**, 10, 17-24:
 
 <a name="sseos-02"></a>
-\begin{equation}
- 3c\left[\frac{\eta - \frac{1}{3}}{1 - \eta} - \frac{yQ^2}{6\widetilde{T}}\left(3AQ^2 -2B\right)\right] + \left(2-s\right) - \frac{s}{y}\ln\left(1-y\right) = 0 \qquad \mathrm{(Eq.~2)}
-\end{equation}
+$$3c\left[\frac{\eta - \frac{1}{3}}{1 - \eta} - \frac{yQ^2}{6\widetilde{T}}\left(3AQ^2 -2B\right)\right] + \left(2-s\right) - \frac{s}{y}\ln\left(1-y\right) = 0 \qquad \mathrm{(Eq.~2)}$$
 
 Where,
-\begin{equation}
-    Q = \frac{1}{y\widetilde{V}}
-\end{equation}
+$$Q = \frac{1}{y\widetilde{V}}$$
 
-\begin{equation}
-   \eta = 2^{-1/6}yQ^{1/3}
-\end{equation}
-\begin{equation} A = 1.011 \end{equation}
-\begin{equation} B = 1.2045 \end{equation}
+$$\eta = 2^{-1/6}yQ^{1/3}$$
+$$A = 1.011$$
+$$B = 1.2045$$
 
 The program minimizes $\chi^2$, with the fit parameters $P^*$, $V^*$, and
 $T^*$:
 
 <a name="chi2"></a>
-\begin{equation}
-\chi^2 = \sum_{i=1}^{N}\frac{\left(M_i - F_i\right)^2}{\nu_i}
-\end{equation}
+$$\chi^2 = \sum_{i=1}^{N}\frac{\left(M_i - F_i\right)^2}{\nu_i}$$
 
 where $M$ and $F$ are the measured and fit specific volumes, respectively,
 and $\nu$ is the variance in the measured specific volumes (square of the
@@ -86,22 +70,16 @@ The reduced specific volume ($\widetilde{V}$), and fraction of
 occupied lattice sites ($y$) are determined from equation [(2)](#sseos-02),
 using the following constraints:
 
-\begin{equation}
-  \frac{s}{3c}\simeq1
-\end{equation}
+$$\frac{s}{3c}\simeq1$$
 
-\begin{equation}
-  s\gg1
-\end{equation}
+$$s\gg1$$
 
 Instead of the exact equation, approximate solutions to the SS-EOS may be
 determined by using equation (10) from Leszek Utracki, Robert *Simha Macromol.
 Theory Simul.* **2001**, 10, 17-24:
 
 <a name="sseos-03"></a>
-\begin{equation}
-\ln \widetilde{V} = a_0 + a_1\widetilde{T}^{3/2} + \widetilde{P}\left[ a_2 + \left( a_3 + a_4\widetilde{P} + a_5\widetilde{P}^2\right)\widetilde{T}^2\right] \qquad \mathrm{(Eq.~3)}
-\end{equation}
+$$\ln \widetilde{V} = a_0 + a_1\widetilde{T}^{3/2} + \widetilde{P}\left[ a_2 + \left( a_3 + a_4\widetilde{P} + a_5\widetilde{P}^2\right)\widetilde{T}^2\right] \qquad \mathrm{(Eq.~3)}$$
 
 where the the reduced variables are as defined [previously](#scaling), and
 the constants are
