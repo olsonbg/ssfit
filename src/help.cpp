@@ -83,7 +83,7 @@ void Help(const char *name)
 	std::cerr << "\n";
 
 	std::cerr << "USAGE: " << "\n";
-	const char *usage = "-i <input filename> -p <number> -v <number> -t <number> [-r <ranges filename>] [-R <pressure ranges filename>] [-s <save filename prefix>] [-n <number>] [--kelvin] [--curves] [--scan] [--data] [--approximate] [--fixp] [--fixv] [--fixt] [--blockdata]";
+	const char *usage = "-i <input filename> -p <number> -v <number> -t <number> [-r <temperature ranges filename>] [-R <pressure ranges filename>] [-s <save filename prefix>] [-n <number>] [--kelvin] [--curves] [--scan] [--data] [--approximate] [--fixp] [--fixv] [--fixt] [--blockdata]";
 	std::string USAGE = name;
 	USAGE += " ";
 	USAGE += usage;
@@ -121,7 +121,7 @@ void Help(const char *name)
 	HelpOption("--input <filename>",
 	           "-i <filename>",
 	           "Input file containing PVT data.");
-	HelpOption("--ranges <filename>",
+	HelpOption("--tranges <filename>",
 	           "-r <filename>",
 	           "File specifying the temperature ranges, for each pressure, to use for fitting and curve generating.");
 	HelpOption("--pranges <filename>",

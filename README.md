@@ -173,7 +173,7 @@ command line.
 |[pstar](#Xstar)                <a name="pstar-t"></a>       |   p        | real number   | yes       | Initial $P^*$ value to use for fitting|
 |[vstar](#Xstar)                <a name="vstar-t"></a>       |   v        | real number   | yes       | Initial $V^*$ value to use for fitting|
 |[tstar](#Xstar)                <a name="tstar-t"></a>       |   t        | real number   | yes       | Initial $T^*$ value to use for fitting|
-|[ranges](#ranges)              <a name="ranges-t"></a>      |   r        | string        | no        | Valid temperature ranges, for each pressure to use |
+|[tranges](#ranges)              <a name="ranges-t"></a>      |   r        | string        | no        | Valid temperature ranges, for each pressure to use |
 |[pranges](#pranges)            <a name="pranges-t"></a>     |   R        | string        | no        | Valid pressure ranges, for each temperature to use |
 |[yonly](#yonly)                <a name="yonly-t"></a>       |   y        |               | no        | Fit only $y$ values, $P^*$, $V^*$, and $T^*$ are fixed.
 |[blockdata](#blockdata)        <a name="blockdata-t"></a>   |   b        |               | no        | Input PVT data is in block format |
@@ -281,7 +281,7 @@ the scan as initial values for the free parameters.
 
 Generate curves, for specific volume ($V$) and occupied fraction
 of lattice sites ($y$), containing [numpoints](#numpoints) data points for
-all pressures and temperatures specified in the [ranges](#ranges) file.
+all pressures and temperatures specified in the [tranges](#ranges) file.
 
 Default name of output file: `default-curves-TVy.dat`
 

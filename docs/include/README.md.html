@@ -1,63 +1,23 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
-  <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-<link rel="stylesheet" href="file:///home/bgo/tips/markdown/github-markdown.css">
-<style>
-    .markdown-body {
-        min-width: 200px;
-        max-width: 790px;
-        margin: 0 auto;
-        padding: 30px;
-    }
-</style>
-<article class="markdown-body">
 <h1 id="ssfit">ssfit</h1>
-<p>A program to calculate the scaling parameters of the Simha-Somcynsky (SS) equation of state (EOS). The source code is hosted by GitHub at <a href="https://github.com/olsonbg/ssfit">https://www.github.com/olsonbg/ssfit</a></p>
+<p>A program to calculate the scaling parameters of the Simha-Somcynsky
+(SS) equation of state (EOS). The source code is hosted by GitHub at <a
+href="https://github.com/olsonbg/ssfit">https://www.github.com/olsonbg/ssfit</a></p>
 <h1 id="contents">Contents</h1>
 <ul>
 <li><a href="#description">Description</a></li>
@@ -73,402 +33,535 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#curves">curves</a></li>
 </ul></li>
 </ul>
-<p><strong>NOTE:</strong> Github does not render LaTeX equations in markdown; to see the equations try viewing this file, or generating the <a href="#documentation">documentation</a>, on your own system. You can also view the html rendered from this file at <a href="docs/include/README.md.html" class="uri">docs/include/README.md.html</a></p>
+<p><strong>NOTE:</strong> Github does not render LaTeX equations in
+markdown; to see the equations try viewing this file, or generating the
+<a href="#documentation">documentation</a>, on your own system. You can
+also view the html rendered from this file at <a
+href="docs/include/README.md.html">docs/include/README.md.html</a></p>
 <h1 id="description">Description</h1>
-<p>The Simha-Somcynsky equation of state, in terms of reduced variables <span class="math inline">\(\widetilde{P}\)</span>, <span class="math inline">\(\widetilde{V}\)</span>, <span class="math inline">\(\widetilde{T}\)</span>:</p>
-<a name="scaling"></a>
-\begin{equation}
+<p>The Simha-Somcynsky equation of state, in terms of reduced variables
+<span class="math inline">\(\widetilde{P}\)</span>, <span
+class="math inline">\(\widetilde{V}\)</span>, <span
+class="math inline">\(\widetilde{T}\)</span>:</p>
+<p><a name="scaling"></a> <span class="math display">\[\begin{equation}
 \widetilde{P} = \frac{P}{P^*}
-\end{equation}
-\begin{equation}
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
 \widetilde{V} = \frac{V}{V^*}
-\end{equation}
-\begin{equation}
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
 \widetilde{T} = \frac{T}{T^*}
-\end{equation}
-<p>are given by equation (2) from Leszek Utracki, Robert Simha <em>Macromol. Theory Simul.</em> <strong>2001</strong>, 10, 17-24:</p>
-<a name="sseos-01"></a>
-\begin{equation}
-  \frac{\widetilde{P}\widetilde{V}}{\widetilde{T}} - \frac{1}{1 - \eta} - \frac{2yQ^2}{\widetilde{T}}\left(AQ^2 - B\right) = 0 \qquad \mathrm{(Eq.~1)}
-\end{equation}
-<p>and equation (3) from Leszek Utracki, Robert Simha <em>Macromol. Theory Simul.</em> <strong>2001</strong>, 10, 17-24:</p>
-<a name="sseos-02"></a>
-\begin{equation}
- 3c\left[\frac{\eta - \frac{1}{3}}{1 - \eta} - \frac{yQ^2}{6\widetilde{T}}\left(3AQ^2 -2B\right)\right] + \left(2-s\right) - \frac{s}{y}\ln\left(1-y\right) = 0 \qquad \mathrm{(Eq.~2)}
-\end{equation}
-Where,
-\begin{equation}
+\end{equation}\]</span></p>
+<p>are given by equation (2) from Leszek Utracki, Robert Simha
+<em>Macromol. Theory Simul.</em> <strong>2001</strong>, 10, 17-24:</p>
+<p><a name="sseos-01"></a> <span class="math display">\[\begin{equation}
+  \frac{\widetilde{P}\widetilde{V}}{\widetilde{T}} - \frac{1}{1 - \eta}
+- \frac{2yQ^2}{\widetilde{T}}\left(AQ^2 - B\right) = 0 \qquad
+\mathrm{(Eq.~1)}
+\end{equation}\]</span></p>
+<p>and equation (3) from Leszek Utracki, Robert Simha <em>Macromol.
+Theory Simul.</em> <strong>2001</strong>, 10, 17-24:</p>
+<p><a name="sseos-02"></a> <span class="math display">\[\begin{equation}
+3c\left[\frac{\eta - \frac{1}{3}}{1 - \eta} -
+\frac{yQ^2}{6\widetilde{T}}\left(3AQ^2 -2B\right)\right] +
+\left(2-s\right) - \frac{s}{y}\ln\left(1-y\right) = 0 \qquad
+\mathrm{(Eq.~2)}
+\end{equation}\]</span></p>
+<p>Where, <span class="math display">\[\begin{equation}
     Q = \frac{1}{y\widetilde{V}}
-\end{equation}
-\begin{equation}
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
    \eta = 2^{-1/6}yQ^{1/3}
-\end{equation}\begin{equation} A = 1.011 \end{equation}\begin{equation} B = 1.2045 \end{equation}
-<p>The program minimizes <span class="math inline">\(\chi^2\)</span>, with the fit parameters <span class="math inline">\(P^*\)</span>, <span class="math inline">\(V^*\)</span>, and <span class="math inline">\(T^*\)</span>:</p>
-<a name="chi2"></a>
-\begin{equation}
+\end{equation}\]</span> <span class="math display">\[\begin{equation} A
+= 1.011 \end{equation}\]</span> <span
+class="math display">\[\begin{equation} B = 1.2045
+\end{equation}\]</span></p>
+<p>The program minimizes <span class="math inline">\(\chi^2\)</span>,
+with the fit parameters <span class="math inline">\(P^*\)</span>, <span
+class="math inline">\(V^*\)</span>, and <span
+class="math inline">\(T^*\)</span>:</p>
+<p><a name="chi2"></a> <span class="math display">\[\begin{equation}
 \chi^2 = \sum_{i=1}^{N}\frac{\left(M_i - F_i\right)^2}{\nu_i}
-\end{equation}
-<p>where <span class="math inline">\(M\)</span> and <span class="math inline">\(F\)</span> are the measured and fit specific volumes, respectively, and <span class="math inline">\(\nu\)</span> is the variance in the measured specific volumes (square of the standard deviation).</p>
-<p>The reduced specific volume (<span class="math inline">\(\widetilde{V}\)</span>), and fraction of occupied lattice sites (<span class="math inline">\(y\)</span>) are determined from equation <a href="#sseos-02">(2)</a>, using the following constraints:</p>
-\begin{equation}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(M\)</span> and <span
+class="math inline">\(F\)</span> are the measured and fit specific
+volumes, respectively, and <span class="math inline">\(\nu\)</span> is
+the variance in the measured specific volumes (square of the standard
+deviation).</p>
+<p>The reduced specific volume (<span
+class="math inline">\(\widetilde{V}\)</span>), and fraction of occupied
+lattice sites (<span class="math inline">\(y\)</span>) are determined
+from equation <a href="#sseos-02">(2)</a>, using the following
+constraints:</p>
+<p><span class="math display">\[\begin{equation}
   \frac{s}{3c}\simeq1
-\end{equation}
-\begin{equation}
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
   s\gg1
-\end{equation}
-<p>Instead of the exact equation, approximate solutions to the SS-EOS may be determined by using equation (10) from Leszek Utracki, Robert <em>Simha Macromol. Theory Simul.</em> <strong>2001</strong>, 10, 17-24:</p>
-<a name="sseos-03"></a>
-\begin{equation}
-\ln \widetilde{V} = a_0 + a_1\widetilde{T}^{3/2} + \widetilde{P}\left[ a_2 + \left( a_3 + a_4\widetilde{P} + a_5\widetilde{P}^2\right)\widetilde{T}^2\right] \qquad \mathrm{(Eq.~3)}
-\end{equation}
-<p>where the the reduced variables are as defined <a href="#scaling">previously</a>, and the constants are</p>
+\end{equation}\]</span></p>
+<p>Instead of the exact equation, approximate solutions to the SS-EOS
+may be determined by using equation (10) from Leszek Utracki, Robert
+<em>Simha Macromol. Theory Simul.</em> <strong>2001</strong>, 10,
+17-24:</p>
+<p><a name="sseos-03"></a> <span class="math display">\[\begin{equation}
+\ln \widetilde{V} = a_0 + a_1\widetilde{T}^{3/2} + \widetilde{P}\left[
+a_2 + \left( a_3 + a_4\widetilde{P} +
+a_5\widetilde{P}^2\right)\widetilde{T}^2\right] \qquad \mathrm{(Eq.~3)}
+\end{equation}\]</span></p>
+<p>where the the reduced variables are as defined <a
+href="#scaling">previously</a>, and the constants are</p>
 <table>
 <thead>
 <tr class="header">
-<th align="left">Variable</th>
-<th align="right">Value</th>
+<th>Variable</th>
+<th style="text-align: right;">Value</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><span class="math inline">\(a_0\)</span></td>
-<td align="right">-0.10346</td>
+<td><span class="math inline">\(a_0\)</span></td>
+<td style="text-align: right;">-0.10346</td>
 </tr>
 <tr class="even">
-<td align="left"><span class="math inline">\(a_1\)</span></td>
-<td align="right">23.854</td>
+<td><span class="math inline">\(a_1\)</span></td>
+<td style="text-align: right;">23.854</td>
 </tr>
 <tr class="odd">
-<td align="left"><span class="math inline">\(a_2\)</span></td>
-<td align="right">-0.1320</td>
+<td><span class="math inline">\(a_2\)</span></td>
+<td style="text-align: right;">-0.1320</td>
 </tr>
 <tr class="even">
-<td align="left"><span class="math inline">\(a_3\)</span></td>
-<td align="right">-333.7</td>
+<td><span class="math inline">\(a_3\)</span></td>
+<td style="text-align: right;">-333.7</td>
 </tr>
 <tr class="odd">
-<td align="left"><span class="math inline">\(a_4\)</span></td>
-<td align="right">1032.5</td>
+<td><span class="math inline">\(a_4\)</span></td>
+<td style="text-align: right;">1032.5</td>
 </tr>
 <tr class="even">
-<td align="left"><span class="math inline">\(a_5\)</span></td>
-<td align="right">-1329.9</td>
+<td><span class="math inline">\(a_5\)</span></td>
+<td style="text-align: right;">-1329.9</td>
 </tr>
 </tbody>
 </table>
-<h1 id="required-libraries"><a name="libraries"></a>Required Libraries</h1>
-<h2 id="gnu-scientific-library-gsl"><a href="http://www.gnu.org/software/gsl/">GNU Scientific Library</a> (GSL)</h2>
+<h1 id="required-libraries"><a name="libraries"></a>Required
+Libraries</h1>
+<h2 id="gnu-scientific-library-gsl"><a
+href="http://www.gnu.org/software/gsl/">GNU Scientific Library</a>
+(GSL)</h2>
 <p>Used for root finding.</p>
-<h2 id="minuit2"><a href="http://project-mathlibs.web.cern.ch/project-mathlibs/minuit/release/download.html">Minuit2</a></h2>
+<h2 id="minuit2"><a
+href="http://project-mathlibs.web.cern.ch/project-mathlibs/minuit/release/download.html">Minuit2</a></h2>
 <p>Used for minimizing <span class="math inline">\(\chi^2\)</span>.</p>
 <h1 id="installation">Installation</h1>
 <p>To compile the program</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">mkdir</span> build
-<span class="kw">cd</span> build
-<span class="kw">cmake</span> -DCMAKE_BUILD_TYPE=release ..
-<span class="kw">make</span>
-<span class="kw">src/ssfit</span></code></pre></div>
-<p><a name="documentation"></a> To generate the documentation as html, which will be available at <code>docs/html/index.html</code>, use</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">make</span> docs</code></pre></div>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> build</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> build</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-DCMAKE_BUILD_TYPE</span><span class="op">=</span>release ..</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">src/ssfit</span></span></code></pre></div>
+<p><a name="documentation"></a> To generate the documentation as html,
+which will be available at <code>docs/html/index.html</code>, use</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> docs</span></code></pre></div>
 <p>To cross-compile, use your toolchain cmake file as:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cmake</span> -DCMAKE_BUILD_TYPE=release -DCMAKE_TOOLCHAIN_FILE=<span class="kw">&lt;</span>Toolchain cmake file<span class="kw">&gt;</span> ..</code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-DCMAKE_BUILD_TYPE</span><span class="op">=</span>release <span class="at">-DCMAKE_TOOLCHAIN_FILE</span><span class="op">=&lt;</span>Toolchain cmake file<span class="op">&gt;</span> ..</span></code></pre></div>
 <h1 id="usage">Usage</h1>
 <p>A typical command line would look like this:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">ssfit</span> -i data/PPE-PS/60.dat -r data/PPE-PS/60-ranges.dat -p 8425 -v 0.9065 -t 11434 --blockdata -s PPE-PS60 --curves</code></pre></div>
-<p>Below is a table of all options available from the command line. The long form options are preceded with <code>--</code>, and short form a single <code>-</code>. For options with both a long and short form, either one may be used on the command line.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ssfit</span> <span class="at">-i</span> data/PPE-PS/60.dat <span class="at">-r</span> data/PPE-PS/60-ranges.dat <span class="at">-p</span> 8425 <span class="at">-v</span> 0.9065 <span class="at">-t</span> 11434 <span class="at">--blockdata</span> <span class="at">-s</span> PPE-PS60 <span class="at">--curves</span></span></code></pre></div>
+<p>Below is a table of all options available from the command line. The
+long form options are preceded with <code>--</code>, and short form a
+single <code>-</code>. For options with both a long and short form,
+either one may be used on the command line.</p>
 <table>
+<colgroup>
+<col style="width: 54%" />
+<col style="width: 10%" />
+<col style="width: 13%" />
+<col style="width: 9%" />
+<col style="width: 11%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th align="left">Long form</th>
-<th align="center">Short form</th>
-<th align="left">Option Type</th>
-<th align="center">Required?</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Long form</th>
+<th style="text-align: center;">Short form</th>
+<th style="text-align: left;">Option Type</th>
+<th style="text-align: center;">Required?</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><a href="#input">input</a> <a name="input-t"></a></td>
-<td align="center">i</td>
-<td align="left">string</td>
-<td align="center">yes</td>
-<td align="left">Input PVT data file</td>
+<td style="text-align: left;"><a href="#input">input</a>
+<a name="input-t"></a></td>
+<td style="text-align: center;">i</td>
+<td style="text-align: left;">string</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: left;">Input PVT data file</td>
 </tr>
 <tr class="even">
-<td align="left"><a href="#Xstar">pstar</a> <a name="pstar-t"></a></td>
-<td align="center">p</td>
-<td align="left">real number</td>
-<td align="center">yes</td>
-<td align="left">Initial <span class="math inline">\(P^*\)</span> value to use for fitting</td>
+<td style="text-align: left;"><a href="#Xstar">pstar</a>
+<a name="pstar-t"></a></td>
+<td style="text-align: center;">p</td>
+<td style="text-align: left;">real number</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: left;">Initial <span
+class="math inline">\(P^*\)</span> value to use for fitting</td>
 </tr>
 <tr class="odd">
-<td align="left"><a href="#Xstar">vstar</a> <a name="vstar-t"></a></td>
-<td align="center">v</td>
-<td align="left">real number</td>
-<td align="center">yes</td>
-<td align="left">Initial <span class="math inline">\(V^*\)</span> value to use for fitting</td>
+<td style="text-align: left;"><a href="#Xstar">vstar</a>
+<a name="vstar-t"></a></td>
+<td style="text-align: center;">v</td>
+<td style="text-align: left;">real number</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: left;">Initial <span
+class="math inline">\(V^*\)</span> value to use for fitting</td>
 </tr>
 <tr class="even">
-<td align="left"><a href="#Xstar">tstar</a> <a name="tstar-t"></a></td>
-<td align="center">t</td>
-<td align="left">real number</td>
-<td align="center">yes</td>
-<td align="left">Initial <span class="math inline">\(T^*\)</span> value to use for fitting</td>
+<td style="text-align: left;"><a href="#Xstar">tstar</a>
+<a name="tstar-t"></a></td>
+<td style="text-align: center;">t</td>
+<td style="text-align: left;">real number</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: left;">Initial <span
+class="math inline">\(T^*\)</span> value to use for fitting</td>
 </tr>
 <tr class="odd">
-<td align="left"><a href="#ranges">ranges</a> <a name="ranges-t"></a></td>
-<td align="center">r</td>
-<td align="left">string</td>
-<td align="center">no</td>
-<td align="left">Valid temperature ranges, for each pressure to use</td>
+<td style="text-align: left;"><a href="#ranges">tranges</a>
+<a name="ranges-t"></a></td>
+<td style="text-align: center;">r</td>
+<td style="text-align: left;">string</td>
+<td style="text-align: center;">no</td>
+<td style="text-align: left;">Valid temperature ranges, for each
+pressure to use</td>
 </tr>
 <tr class="even">
-<td align="left"><a href="#pranges">pranges</a> <a name="pranges-t"></a></td>
-<td align="center">R</td>
-<td align="left">string</td>
-<td align="center">no</td>
-<td align="left">Valid pressure ranges, for each temperature to use</td>
+<td style="text-align: left;"><a href="#pranges">pranges</a>
+<a name="pranges-t"></a></td>
+<td style="text-align: center;">R</td>
+<td style="text-align: left;">string</td>
+<td style="text-align: center;">no</td>
+<td style="text-align: left;">Valid pressure ranges, for each
+temperature to use</td>
 </tr>
 <tr class="odd">
-<td align="left"><a href="#yonly">yonly</a> <a name="yonly-t"></a></td>
-<td align="center">y</td>
-<td align="left"></td>
-<td align="center">no</td>
-<td align="left">Fit only <span class="math inline">\(y\)</span> values, <span class="math inline">\(P^*\)</span>, <span class="math inline">\(V^*\)</span>, and <span class="math inline">\(T^*\)</span> are fixed.</td>
+<td style="text-align: left;"><a href="#yonly">yonly</a>
+<a name="yonly-t"></a></td>
+<td style="text-align: center;">y</td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: left;">Fit only <span
+class="math inline">\(y\)</span> values, <span
+class="math inline">\(P^*\)</span>, <span
+class="math inline">\(V^*\)</span>, and <span
+class="math inline">\(T^*\)</span> are fixed.</td>
 </tr>
 <tr class="even">
-<td align="left"><a href="#blockdata">blockdata</a> <a name="blockdata-t"></a></td>
-<td align="center">b</td>
-<td align="left"></td>
-<td align="center">no</td>
-<td align="left">Input PVT data is in block format</td>
+<td style="text-align: left;"><a href="#blockdata">blockdata</a>
+<a name="blockdata-t"></a></td>
+<td style="text-align: center;">b</td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: left;">Input PVT data is in block format</td>
 </tr>
 <tr class="odd">
-<td align="left"><a href="#save">save</a> <a name="save-t"></a></td>
-<td align="center">s</td>
-<td align="left">string</td>
-<td align="center">no</td>
-<td align="left">Prefix used for saving data</td>
+<td style="text-align: left;"><a href="#save">save</a>
+<a name="save-t"></a></td>
+<td style="text-align: center;">s</td>
+<td style="text-align: left;">string</td>
+<td style="text-align: center;">no</td>
+<td style="text-align: left;">Prefix used for saving data</td>
 </tr>
 <tr class="even">
-<td align="left"><a href="#fixX">fixp</a> <a name="fitp-t"></a></td>
-<td align="center"></td>
-<td align="left"></td>
-<td align="center">no</td>
-<td align="left">Fix Pstar to the value specified on the command line</td>
+<td style="text-align: left;"><a href="#fixX">fixp</a>
+<a name="fitp-t"></a></td>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: left;">Fix Pstar to the value specified on the
+command line</td>
 </tr>
 <tr class="odd">
-<td align="left"><a href="#fixX">fixv</a> <a name="fitv-t"></a></td>
-<td align="center"></td>
-<td align="left"></td>
-<td align="center">no</td>
-<td align="left">Fix Vstar to the value specified on the command line</td>
+<td style="text-align: left;"><a href="#fixX">fixv</a>
+<a name="fitv-t"></a></td>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: left;">Fix Vstar to the value specified on the
+command line</td>
 </tr>
 <tr class="even">
-<td align="left"><a href="#fixX">fixt</a> <a name="fitt-t"></a></td>
-<td align="center"></td>
-<td align="left"></td>
-<td align="center">no</td>
-<td align="left">Fix Tstar to the value specified on the command line</td>
+<td style="text-align: left;"><a href="#fixX">fixt</a>
+<a name="fitt-t"></a></td>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: left;">Fix Tstar to the value specified on the
+command line</td>
 </tr>
 <tr class="odd">
-<td align="left"><a href="#dataonly">dataonly</a> <a name="dataonly-y"></a></td>
-<td align="center">d</td>
-<td align="left"></td>
-<td align="center">no</td>
-<td align="left">Save the data in easy to plot files. This will not do any fitting</td>
+<td style="text-align: left;"><a href="#dataonly">dataonly</a>
+<a name="dataonly-y"></a></td>
+<td style="text-align: center;">d</td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: left;">Save the data in easy to plot files. This
+will not do any fitting</td>
 </tr>
 <tr class="even">
-<td align="left">data</td>
-<td align="center"></td>
-<td align="left"></td>
-<td align="center">no</td>
-<td align="left">Synonym for <a href="#dataonly-t">dataonly</a></td>
+<td style="text-align: left;">data</td>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: left;">Synonym for <a
+href="#dataonly-t">dataonly</a></td>
 </tr>
 <tr class="odd">
-<td align="left"><a href="#scan">scan</a> <a name="scan-t"></a></td>
-<td align="center"></td>
-<td align="left"></td>
-<td align="center">no</td>
-<td align="left">Scan the fitting parameters around the minimum after an initial fitting, followed by a second round of fitting</td>
+<td style="text-align: left;"><a href="#scan">scan</a>
+<a name="scan-t"></a></td>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: left;">Scan the fitting parameters around the
+minimum after an initial fitting, followed by a second round of
+fitting</td>
 </tr>
 <tr class="even">
-<td align="left"><a href="#curves">curves</a> <a name="curves-t"></a></td>
-<td align="center"></td>
-<td align="left"></td>
-<td align="center">no</td>
-<td align="left">Generate curves for nice plotting (see <a href="#numpoints-t">numpoints</a> option)</td>
+<td style="text-align: left;"><a href="#curves">curves</a>
+<a name="curves-t"></a></td>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: left;">Generate curves for nice plotting (see <a
+href="#numpoints-t">numpoints</a> option)</td>
 </tr>
 <tr class="odd">
-<td align="left"><a href="#approximate">approximate</a> <a name="approx-t"></a></td>
-<td align="center"></td>
-<td align="left"></td>
-<td align="center">no</td>
-<td align="left">Use an approximate equation for fitting</td>
+<td style="text-align: left;"><a href="#approximate">approximate</a>
+<a name="approx-t"></a></td>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: left;">Use an approximate equation for
+fitting</td>
 </tr>
 <tr class="even">
-<td align="left">approx</td>
-<td align="center"></td>
-<td align="left"></td>
-<td align="center">no</td>
-<td align="left">Synonym for <a href="#approx-t">approximate</a></td>
+<td style="text-align: left;">approx</td>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: left;">Synonym for <a
+href="#approx-t">approximate</a></td>
 </tr>
 <tr class="odd">
-<td align="left"><a href="#kelvin">kelvin</a> <a name="kelvin-t"></a></td>
-<td align="center"></td>
-<td align="left"></td>
-<td align="center">no</td>
-<td align="left">The input temperature are in Kelvin. The default is Celsius</td>
+<td style="text-align: left;"><a href="#kelvin">kelvin</a>
+<a name="kelvin-t"></a></td>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;">no</td>
+<td style="text-align: left;">The input temperature are in Kelvin. The
+default is Celsius</td>
 </tr>
 <tr class="even">
-<td align="left"><a href="#numpoints">numpoints</a> <a name="numpoints-t"></a></td>
-<td align="center">n</td>
-<td align="left">integer</td>
-<td align="center">no</td>
-<td align="left">Number of points to use for curve generation</td>
+<td style="text-align: left;"><a href="#numpoints">numpoints</a>
+<a name="numpoints-t"></a></td>
+<td style="text-align: center;">n</td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: center;">no</td>
+<td style="text-align: left;">Number of points to use for curve
+generation</td>
 </tr>
 </tbody>
 </table>
 <h2 id="input">Input</h2>
-<p>Read PVT data that is in three column format, with columns separated by whitespace.</p>
+<p>Read PVT data that is in three column format, with columns separated
+by whitespace.</p>
 <ul>
 <li>Columns
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Measured pressure</li>
 <li>Measured temperature</li>
 <li>Measured specific volume</li>
 </ol></li>
 </ul>
 <h2 id="blockdata">Blockdata</h2>
-<p>Read PVT data that is in block format, with columns separated by whitespace.</p>
+<p>Read PVT data that is in block format, with columns separated by
+whitespace.</p>
 <table>
 <thead>
 <tr class="header">
-<th align="center">Column 1</th>
-<th align="center">Column 2</th>
-<th align="center">Column 3</th>
-<th align="center">....</th>
-<th align="center">Column n</th>
+<th style="text-align: center;">Column 1</th>
+<th style="text-align: center;">Column 2</th>
+<th style="text-align: center;">Column 3</th>
+<th style="text-align: center;">….</th>
+<th style="text-align: center;">Column n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"></td>
-<td align="center">P1</td>
-<td align="center">P2</td>
-<td align="center">...</td>
-<td align="center">Pn</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">P1</td>
+<td style="text-align: center;">P2</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">Pn</td>
 </tr>
 <tr class="even">
-<td align="center">T1</td>
-<td align="center">V11</td>
-<td align="center">V12</td>
-<td align="center">...</td>
-<td align="center">V1n</td>
+<td style="text-align: center;">T1</td>
+<td style="text-align: center;">V11</td>
+<td style="text-align: center;">V12</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">V1n</td>
 </tr>
 <tr class="odd">
-<td align="center">T2</td>
-<td align="center">V21</td>
-<td align="center">V22</td>
-<td align="center">...</td>
-<td align="center">V2n</td>
+<td style="text-align: center;">T2</td>
+<td style="text-align: center;">V21</td>
+<td style="text-align: center;">V22</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">V2n</td>
 </tr>
 <tr class="even">
-<td align="center">...</td>
-<td align="center">...</td>
-<td align="center">...</td>
-<td align="center">...</td>
-<td align="center">V2n</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">V2n</td>
 </tr>
 <tr class="odd">
-<td align="center">Tm</td>
-<td align="center">Vm1</td>
-<td align="center">Vm2</td>
-<td align="center">...</td>
-<td align="center">Vmn</td>
+<td style="text-align: center;">Tm</td>
+<td style="text-align: center;">Vm1</td>
+<td style="text-align: center;">Vm2</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">Vmn</td>
 </tr>
 </tbody>
 </table>
 <h2 id="ranges">Ranges</h2>
-<p>Read temperature ranges. Fitting and curve generation will be limited to temperature ranges listed in this file.</p>
-<p>Data is in three column format, with each column separated by whitespace.</p>
+<p>Read temperature ranges. Fitting and curve generation will be limited
+to temperature ranges listed in this file.</p>
+<p>Data is in three column format, with each column separated by
+whitespace.</p>
 <ul>
 <li>Columns
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Pressure</li>
 <li>Minimum temperature</li>
 <li>Maximum temperature</li>
 </ol></li>
 </ul>
 <h2 id="pranges">PRanges</h2>
-<p>Read pressure ranges. Curve generation will be limited to pressure ranges listed in this file.</p>
-<p>Data is in three column format, with each column separated by whitespace.</p>
+<p>Read pressure ranges. Curve generation will be limited to pressure
+ranges listed in this file.</p>
+<p>Data is in three column format, with each column separated by
+whitespace.</p>
 <ul>
 <li>Columns
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Temperature</li>
 <li>Minimum pressure</li>
 <li>Maximum pressure</li>
 </ol></li>
 </ul>
 <h2 id="yonly">yonly</h2>
-<p>For temperatures below the glass transition, the SS-EOS equilibrium equation <a href="#sseos-02">(2)</a> is not valid. This makes determining <span class="math inline">\(P^*\)</span>, <span class="math inline">\(V^*\)</span>, and <span class="math inline">\(T^*\)</span> difficult, however the <span class="math inline">\(y\)</span> values can be determined from equation <a href="#sseos-01">(1)</a>, if the scaling parameters are known. This option enables determining <span class="math inline">\(y\)</span> by fixing the scaling parameters, and using only equation <a href="#sseos-01">(1)</a>.</p>
+<p>For temperatures below the glass transition, the SS-EOS equilibrium
+equation <a href="#sseos-02">(2)</a> is not valid. This makes
+determining <span class="math inline">\(P^*\)</span>, <span
+class="math inline">\(V^*\)</span>, and <span
+class="math inline">\(T^*\)</span> difficult, however the <span
+class="math inline">\(y\)</span> values can be determined from equation
+<a href="#sseos-01">(1)</a>, if the scaling parameters are known. This
+option enables determining <span class="math inline">\(y\)</span> by
+fixing the scaling parameters, and using only equation <a
+href="#sseos-01">(1)</a>.</p>
 <p>Default name of output file: <code>default-PVTy.dat</code></p>
 <ul>
 <li>Columns of output file
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Measured pressure</li>
 <li>Measured specific volume</li>
 <li>Measured temperature</li>
 <li>Fit occupied fraction of lattice sites</li>
 </ol></li>
 </ul>
-<h2 id="pstar-vstar-and-tstar"><a name="Xstar"></a> pstar, vstar, and tstar</h2>
-<p>The initial guess for the scaling parameters of the <a href="#scaling">SS-EOS</a>. All three have the same units as the parameter they are scaling.</p>
-<h2 id="fixp-fixv-and-fixt"><a name="fixX"></a> fixp, fixv, and fixt</h2>
-<p>The default behavior is to use <span class="math inline">\(P^*\)</span>, <span class="math inline">\(V^*\)</span>, and <span class="math inline">\(T^*\)</span> as fitting parameters, however one, two or all three parameters may be fixed with these options.</p>
+<h2 id="pstar-vstar-and-tstar"><a name="Xstar"></a> pstar, vstar, and
+tstar</h2>
+<p>The initial guess for the scaling parameters of the <a
+href="#scaling">SS-EOS</a>. All three have the same units as the
+parameter they are scaling.</p>
+<h2 id="fixp-fixv-and-fixt"><a name="fixX"></a> fixp, fixv, and
+fixt</h2>
+<p>The default behavior is to use <span
+class="math inline">\(P^*\)</span>, <span
+class="math inline">\(V^*\)</span>, and <span
+class="math inline">\(T^*\)</span> as fitting parameters, however one,
+two or all three parameters may be fixed with these options.</p>
 <h2 id="dataonly">Dataonly</h2>
-<p>Do not fit the data, only save it or generate <a href="#curves">curves</a> from the <span class="math inline">\(P^*\)</span>, <span class="math inline">\(V^*\)</span>, and <span class="math inline">\(T^*\)</span> <a href="#Xstar">parameters</a>.</p>
+<p>Do not fit the data, only save it or generate <a
+href="#curves">curves</a> from the <span
+class="math inline">\(P^*\)</span>, <span
+class="math inline">\(V^*\)</span>, and <span
+class="math inline">\(T^*\)</span> <a href="#Xstar">parameters</a>.</p>
 <h2 id="scan">Scan</h2>
-<p>After an initial minimization of <a href="#chi2"><span class="math inline">\(\chi^2\)</span></a>, the free parameters will be scanned around their current values in an attempt to refine the minimum. A second round of minimization will then be performed using the results of the scan as initial values for the free parameters.</p>
+<p>After an initial minimization of <a href="#chi2"><span
+class="math inline">\(\chi^2\)</span></a>, the free parameters will be
+scanned around their current values in an attempt to refine the minimum.
+A second round of minimization will then be performed using the results
+of the scan as initial values for the free parameters.</p>
 <h2 id="curves">Curves</h2>
-<p>Generate curves, for specific volume (<span class="math inline">\(V\)</span>) and occupied fraction of lattice sites (<span class="math inline">\(y\)</span>), containing <a href="#numpoints">numpoints</a> data points for all pressures and temperatures specified in the <a href="#ranges">ranges</a> file.</p>
+<p>Generate curves, for specific volume (<span
+class="math inline">\(V\)</span>) and occupied fraction of lattice sites
+(<span class="math inline">\(y\)</span>), containing <a
+href="#numpoints">numpoints</a> data points for all pressures and
+temperatures specified in the <a href="#ranges">tranges</a> file.</p>
 <p>Default name of output file: <code>default-curves-TVy.dat</code></p>
 <ul>
 <li>Columns of output file
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Measured temperature</li>
 <li>Specific volume from fit</li>
 <li>Occupied fraction of lattice sites</li>
 </ol></li>
-<li>Data is grouped by pressure, with each pressure separated by a blank line.</li>
+<li>Data is grouped by pressure, with each pressure separated by a blank
+line.</li>
 </ul>
-<p>If the <a href="#pranges">pranges</a> option is specified, the following curve file will also be generated:</p>
+<p>If the <a href="#pranges">pranges</a> option is specified, the
+following curve file will also be generated:</p>
 <p>Default name of output file: <code>default-curves-PVy.dat</code></p>
 <ul>
 <li>Columns of output file
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Measured pressure</li>
 <li>Measured specific volume</li>
 <li>Fit occupied fraction of lattice sites</li>
 </ol></li>
-<li>Data is grouped by temperature, with each group separated by a blank line</li>
+<li>Data is grouped by temperature, with each group separated by a blank
+line</li>
 </ul>
-<p>The <code>default</code> string will be replaced by the string given by <a href="#save">save</a>, if any.</p>
+<p>The <code>default</code> string will be replaced by the string given
+by <a href="#save">save</a>, if any.</p>
 <h2 id="approximate">Approximate</h2>
-<p>The minimization is performed using the <a href="#sseos-03">approximate solution</a> to the SS-EOS, instead of the exact equations <a href="#sseos-01">(1)</a> and <a href="#sseos-02">(2)</a>.</p>
+<p>The minimization is performed using the <a
+href="#sseos-03">approximate solution</a> to the SS-EOS, instead of the
+exact equations <a href="#sseos-01">(1)</a> and <a
+href="#sseos-02">(2)</a>.</p>
 <h2 id="kelvin">Kelvin</h2>
-<p>The temperature values in the <a href="#input">input</a> and <a href="#ranges">ranges</a> files are in Kelvin, instead of the default Celsius.</p>
+<p>The temperature values in the <a href="#input">input</a> and <a
+href="#ranges">ranges</a> files are in Kelvin, instead of the default
+Celsius.</p>
 <h2 id="numpoints">numpoints</h2>
-<p>Number of data points to save for <a href="#curves">curve</a> generation.</p>
+<p>Number of data points to save for <a href="#curves">curve</a>
+generation.</p>
 <h2 id="save">save</h2>
-<p>Prefix used for saving data. If no save prefix is used, the string <code>default</code> will be used. The default files generated are listed below.</p>
+<p>Prefix used for saving data. If no save prefix is used, the string
+<code>default</code> will be used. The default files generated are
+listed below.</p>
 <ul>
 <li><code>default-summary.dat</code></li>
 <li><code>default-PVTVy.dat</code>
 <ul>
 <li>Columns
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Measured pressure</li>
 <li>Measured specific volume</li>
 <li>Measured temperature</li>
@@ -479,14 +572,14 @@ Where,
 <li><code>default-TVV.dat</code>
 <ul>
 <li>Columns
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Measured temperature</li>
 <li>Measured specific volume</li>
 <li>Fit specific volume</li>
 </ol></li>
-<li>Data is grouped by pressure, with each group separated by a blank line.</li>
+<li>Data is grouped by pressure, with each group separated by a blank
+line.</li>
 </ul></li>
 </ul>
-</article>
 </body>
 </html>
