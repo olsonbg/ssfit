@@ -119,10 +119,13 @@ int main(int argc, char *argv[]) {
 				flags |= (unsigned int)Flags::FIXED_P|Flags::FIXED_V|Flags::FIXED_T;
 				break;
 			case 'h':
-			case '?':
 				Help( argv[0] );
+				return EXIT_SUCCESS;
+			case '?':
+				std::cerr << "Use the '-h' or '--help' options for help.\n";
+				return EXIT_FAILURE;
 			default:
-				return(1);
+				return EXIT_FAILURE;
 		}
 	}
 	// Done reading command line arguments
