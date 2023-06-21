@@ -25,14 +25,36 @@ bool readPVT( const std::string filename,
 	if ( ifp.is_open() )
 	{
 		std::string line;
+		unsigned int lineNumber= 0;
 		while( std::getline(ifp, line) )
 		{
+			lineNumber++;
 			if( line[0] != '#' )
 			{
 				std::istringstream l(line);
 				l >> data_p;
+				if (!l) {
+					std::cerr << "Error: Failed to parse line "
+					          << lineNumber
+					          << " of datafile, skipping.\n";
+					continue;
+				}
+
 				l >> data_t;
+				if (!l) {
+					std::cerr << "Error: Failed to parse line "
+					          << lineNumber
+					          << " of datafile, skipping.\n";
+					continue;
+				}
+
 				l >> data_v;
+				if (!l) {
+					std::cerr << "Error: Failed to parse line "
+					          << lineNumber
+					          << " of datafile, skipping.\n";
+					continue;
+				}
 
 				// Temperatures must be in Kelvin
 				if ( !isKelvin ) data_t += 273.15;
