@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 3.0)
 
 if( NOT DEFINED CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "" )
 	message( "Defaulting to build type of Release." )
@@ -24,7 +24,7 @@ set(CMAKE_CXX_FLAGS_DEBUG
 
 # The version number.
 set (ssfit_VERSION_MAJOR 0)
-set (ssfit_VERSION_MINOR 5)
+set (ssfit_VERSION_MINOR 6)
 
 # configure a header file to pass some of the CMake settings
 # to the source code
