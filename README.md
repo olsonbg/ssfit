@@ -56,8 +56,8 @@ $$\eta = 2^{-1/6}yQ^{1/3}$$
 $$A = 1.011$$
 $$B = 1.2045$$
 
-The program minimizes $\chi^2$, with the fit parameters $P^*$, $V^*$, and
-$T^*$:
+The program minimizes $\chi^2$, with the fit parameters $P^{*}$, $V^{*}$, and
+$T^{*}$:
 
 <a name="chi2"></a>
 $$\chi^2 = \sum_{i=1}^{N}\frac{\left(M_i - F_i\right)^2}{\nu_i}$$
