@@ -18,13 +18,6 @@ equation of state (EOS). The source code is hosted by GitHub at
     * [TVV](#save)
     * [curves](#curves)
 
-
-**NOTE:** Github does not render LaTeX equations in markdown; to see the
-equations try viewing this file, or generating the
-[documentation](#documentation), on your own system.  You can also view the
-html rendered from this file at
-[docs/include/README.md.html](docs/include/README.md.html)
-
 # Description
 
 The Simha-Somcynsky equation of state, in terms of reduced variables
@@ -81,8 +74,8 @@ Theory Simul.* **2001**, 10, 17-24:
 <a name="sseos-03"></a>
 $$\ln \widetilde{V} = a_0 + a_1\widetilde{T}^{3/2} + \widetilde{P}\left[ a_2 + \left( a_3 + a_4\widetilde{P} + a_5\widetilde{P}^2\right)\widetilde{T}^2\right] \qquad \mathrm{(Eq.~3)}$$
 
-where the the reduced variables are as defined [previously](#scaling), and
-the constants are
+where the reduced variables are as defined [previously](#scaling), and the
+constants are
 
 | Variable  | Value   |
 | --------- | -----:  |
