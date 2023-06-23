@@ -31,11 +31,11 @@ The Simha-Somcynsky equation of state, in terms of reduced variables
 $\widetilde{P}$, $\widetilde{V}$, $\widetilde{T}$:
 
 <a name="scaling"></a>
-$$\widetilde{P} = \frac{P}{P^*}$$
+$$\widetilde{P} = \frac{P}{P^\star}$$
 
-$$\widetilde{V} = \frac{V}{V^*}$$
+$$\widetilde{V} = \frac{V}{V^\star}$$
 
-$$\widetilde{T} = \frac{T}{T^*}$$
+$$\widetilde{T} = \frac{T}{T^\star}$$
 
 are given by equation (2) from Leszek Utracki, Robert Simha *Macromol. Theory
 Simul.* **2001**, 10, 17-24:
@@ -148,12 +148,12 @@ command line.
 |Long form                                                   | Short form |Option Type    | Required? | Description |
 |:-----------------------------------------------------------|:----------:|:--------------|:---------:|:------------|
 |[input](#input)                <a name="input-t"></a>       |   i        | string        | yes       | Input PVT data file|
-|[pstar](#Xstar)                <a name="pstar-t"></a>       |   p        | real number   | yes       | Initial $P^*$ value to use for fitting|
-|[vstar](#Xstar)                <a name="vstar-t"></a>       |   v        | real number   | yes       | Initial $V^*$ value to use for fitting|
-|[tstar](#Xstar)                <a name="tstar-t"></a>       |   t        | real number   | yes       | Initial $T^*$ value to use for fitting|
+|[pstar](#Xstar)                <a name="pstar-t"></a>       |   p        | real number   | yes       | Initial $P^\star$ value to use for fitting|
+|[vstar](#Xstar)                <a name="vstar-t"></a>       |   v        | real number   | yes       | Initial $V^\star$ value to use for fitting|
+|[tstar](#Xstar)                <a name="tstar-t"></a>       |   t        | real number   | yes       | Initial $T^\star$ value to use for fitting|
 |[tranges](#ranges)              <a name="ranges-t"></a>      |   r        | string        | no        | Valid temperature ranges, for each pressure to use |
 |[pranges](#pranges)            <a name="pranges-t"></a>     |   R        | string        | no        | Valid pressure ranges, for each temperature to use |
-|[yonly](#yonly)                <a name="yonly-t"></a>       |   y        |               | no        | Fit only $y$ values, $P^*$, $V^*$, and $T^*$ are fixed.
+|[yonly](#yonly)                <a name="yonly-t"></a>       |   y        |               | no        | Fit only $y$ values, $P^\star$, $V^\star$, and $T^\star$ are fixed.
 |[blockdata](#blockdata)        <a name="blockdata-t"></a>   |   b        |               | no        | Input PVT data is in block format |
 |[save](#save)                  <a name="save-t"></a>        |   s        | string        | no        | Prefix used for saving data |
 |[fixp](#fixX)                  <a name="fitp-t"></a>        |            |               | no        | Fix Pstar to the value specified on the command line|
@@ -218,11 +218,11 @@ Data is in three column format, with each column separated by whitespace.
 ## yonly
 
 For temperatures below the glass transition, the SS-EOS equilibrium equation
-[(2)](#sseos-02) is not valid. This makes determining $P^*$, $V^*$, and
-$T^*$ difficult, however the $y$ values can be determined from equation
-[(1)](#sseos-01), if the scaling parameters are known. This option enables
-determining $y$ by fixing the scaling parameters, and using only equation
-[(1)](#sseos-01).
+[(2)](#sseos-02) is not valid. This makes determining $P^\star$, $V^\star$,
+and $T^\star$ difficult, however the $y$ values can be determined from
+equation [(1)](#sseos-01), if the scaling parameters are known. This option
+enables determining $y$ by fixing the scaling parameters, and using only
+equation [(1)](#sseos-01).
 
 Default name of output file: `default-PVTy.dat`
 
@@ -239,14 +239,14 @@ three have the same units as the parameter they are scaling.
 
 ## <a name="fixX"></a> fixp, fixv, and fixt
 
-The default behavior is to use $P^*$, $V^*$, and $T^*$ as fitting
+The default behavior is to use $P^\star$, $V^\star$, and $T^\star$ as fitting
 parameters, however one, two or all three parameters may be fixed with these
 options.
 
 ## Dataonly
 
 Do not fit the data, only save it or generate [curves](#curves) from the
-$P^*$, $V^*$, and $T^*$ [parameters](#Xstar).
+$P^\star$, $V^\star$, and $T^\star$ [parameters](#Xstar).
 
 ## Scan
 
